@@ -7,22 +7,22 @@ function verifyCompatible(){
 }
 
 function toggleInputEditable(value) {
-    // document.getElementById('inputNumOfThermostats').disabled = value;
-    // document.getElementById('inputNumOfCWireAdapters').disabled = value;
-    // document.getElementById('inputThermostatColor').disabled = value;
-    // document.getElementById('inputHasWifi').disabled = value;
-    // document.getElementById('inputHasAC').disabled = value;
-    // document.getElementById('inputFirstName').disabled = value;
-    // document.getElementById('inputLastName').disabled = value;
-    // document.getElementById('inputAddress1').disabled = value;
-    // document.getElementById('inputAddress2').disabled = value;
-    // document.getElementById('inputCity').disabled = value;
-    // document.getElementById('inputState').disabled = value;
-    // document.getElementById('inputZip').disabled = value;
-    // document.getElementById('inputPhone').disabled = value;
-    // document.getElementById('inputEmail').disabled = value;
-    // document.getElementById('inputUserFeedback').disabled = value;
-    // document.getElementById('checkTC').disabled = value;
+    document.getElementById('signUp_total_thermostats_needed').disabled = value;
+    document.getElementById('signUp_total_cwires_needed').disabled = value;
+    document.getElementById('signUp_thermostat_color').disabled = value;
+    document.getElementById('signUp_has_wifi_100_pct').disabled = value;
+    document.getElementById('signUp_has_central_ac').disabled = value;
+    document.getElementById('signUp_utility_firstName').disabled = value;
+    document.getElementById('signUp_utility_lastName').disabled = value;
+    document.getElementById('signUp_utility_location_address1').disabled = value;
+    document.getElementById('signUp_utility_location_address2').disabled = value;
+    document.getElementById('signUp_utility_location_city').disabled = value;
+    document.getElementById('signUp_utility_location_state').disabled = value;
+    document.getElementById('signUp_utility_location_zipcode').disabled = value;
+    document.getElementById('signUp_utility_phone').disabled = value;
+    document.getElementById('signUp_utility_email').disabled = value;
+    document.getElementById('signUp_mostExcited').disabled = value;
+    document.getElementById('signUp_legal_accepted').disabled = value;
 
     document.getElementById('btnLinkUtilityAccount').disabled = value;
     document.getElementById('btn_signup_enroll').disabled = value;

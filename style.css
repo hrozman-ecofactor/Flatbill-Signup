@@ -59,6 +59,11 @@ input[type=text], input[type=tel], input[type=email], input[type=password], sele
   box-shadow: none;
 }
 
+input[type=text]:disabled, input[type=tel]:disabled, input[type=email]:disabled, input[type=password]:disabled, select:disabled {
+  background-color: #ebebeb;
+  color:#a6a6a6;
+}
+
 select {
   margin-top: .1rem;
   margin-bottom: .1rem;
@@ -155,6 +160,7 @@ input[type=checkbox] {
 /* Mark the active step: */
 .step.active {
   opacity: 1;
+  background-color: #008c99;
 }
 
 /* Mark the steps that are finished and valid: */
