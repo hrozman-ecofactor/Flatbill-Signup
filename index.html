@@ -17,7 +17,7 @@
     <link href="style.css" rel="stylesheet" type="text/css"/>
     <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', 'UA-107304173-1', 'auto');ga('send', 'pageview');</script>
     <script>
-        var DEBUG_MODE = false;
+        var DEBUG_MODE = true;
         //DEBUG_MODE = true; // Allow local debugging
 
         var FORM_TYPE_SIGNUP = "signUp";
@@ -216,14 +216,10 @@
                 " GMT+0";
 
             // signUp_compatible_isVerified
-            results = validateAndGetUserInput('signUp_compatible_isVerified', 'select', false);
-            sCompatibleIsVerified = results[0];
+            results = validateAndGetUserInput('signUp_compatible_isVerified', 'checkbox', false);
             isValid = results[1];
             if(isValid == false)
                 validUserData = false;
-            bCompatibleIsVerified = false;
-            if(sCompatibleIsVerified == "yes")
-                bCompatibleIsVerified = true;
 
             // signUp_total_cwires_needed
             results = validateAndGetUserInput('signUp_total_cwires_needed', 'select', false);
@@ -387,7 +383,7 @@
             joDetails = {
                 "submissionDate": sUtcNow,
                 "submissionType": FORM_TYPE_SIGNUP,
-                "compatible_isVerified": bCompatibleIsVerified,
+//                "compatible_isVerified": bCompatibleIsVerified,
                 "total_thermostats_needed": sTotalThermostatsNeeded,
                 "total_cwires_needed": sTotalCwiresNeeded,
                 "thermostat_color": sThermostatColor,
@@ -512,8 +508,8 @@
                         </label>
                     </div>
                     <div class="effield">
-                            <input type="checkbox" class="" id="checkVerifyCompatibility" value="on" onclick="verifyCompatible()">
-                            <label class="effieldlabel efCheckboxStyleLabel" for="checkVerifyCompatibility">
+                            <input type="checkbox" class="" id="signUp_compatible_isVerified" value="on" onclick="verifyCompatible()">
+                            <label class="effieldlabel efCheckboxStyleLabel" for="signUp_compatible_isVerified">
                                 I have verified that my home wiring is compatible.<div class="requiredFieldFlag"></div>
                             </label>
                     </div>
@@ -525,10 +521,10 @@
                     </div>
                     <div class="section-thermostatInfo">
                         <div class="effield">
-                            <label class="effieldlabel" for="inputNumOfThermostats">
+                            <label class="effieldlabel" for="signUp_total_thermostats_needed">
                                 How many thermostats do you need in your home?<div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="inputNumOfThermostats" required>
+                            <select class="rawcontrol" id="signUp_total_thermostats_needed" required>
                                 <option value="">---</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -537,10 +533,10 @@
                             </select>
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="inputNumOfCWireAdapters">
+                            <label class="effieldlabel" for="signUp_total_cwires_needed">
                                 How many C-Wire Adapters will you need?<div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="inputNumOfCWireAdapters" required>
+                            <select class="rawcontrol" id="signUp_total_cwires_needed" required>
                                 <option value="">---</option>
                                 <option value="0">0</option>
                                 <option value="1">1</option>
@@ -550,30 +546,30 @@
                             </select>
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="inputThermostatColor">
+                            <label class="effieldlabel" for="signUp_thermostat_color">
                                 What color is your thermostat?<div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="inputThermostatColor" required>
+                            <select class="rawcontrol" id="signUp_thermostat_color" required>
                                 <option value="">---</option>
                                 <option value="white">White</option>
                                 <option value="black">Black</option>
                             </select>
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="inputHasWifi">
+                            <label class="effieldlabel" for="signUp_has_wifi_100_pct">
                                 Do you have Wi-Fi in your home?  <div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="inputHasWifi" required>
+                            <select class="rawcontrol" id="signUp_has_wifi_100_pct" required>
                                 <option value="">---</option>
                                 <option value="0">Yes</option>
                                 <option value="1">No</option>
                             </select>
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="inputHasAC">
+                            <label class="effieldlabel" for="signUp_has_central_ac">
                                 Do you have central AC?<div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="inputHasAC" required>
+                            <select class="rawcontrol" id="signUp_has_central_ac" required>
                                 <option value="">---</option>
                                 <option value="0">Yes</option>
                                 <option value="1">No</option>
@@ -582,66 +578,66 @@
                     </div>
                     <div class="section-userInfo">
                         <div class="effield">
-                            <label class="effieldlabel" for="inputFirstName">
+                            <label class="effieldlabel" for="signUp_utility_firstName">
                                 First Name:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="inputFirstName" required value="" maxlength="30">
+                            <input type="text" class="" id="signUp_utility_firstName" required value="" maxlength="30">
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="inputLastName">
+                            <label class="effieldlabel" for="signUp_utility_lastName">
                                 Last Name:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="inputLastName" required value="" maxlength="30">
+                            <input type="text" class="" id="signUp_utility_lastName" required value="" maxlength="30">
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="inputAddress1">
+                            <label class="effieldlabel" for="signUp_utility_location_address1">
                                 Address 1:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="inputAddress1" required value="" maxlength="30">
+                            <input type="text" class="" id="signUp_utility_location_address1" required value="" maxlength="30">
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="inputAddress2">
+                            <label class="effieldlabel" for="signUp_utility_location_address2">
                                 Address 2:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="inputAddress2" required value="" maxlength="30">
+                            <input type="text" class="" id="signUp_utility_location_address2" required value="" maxlength="30">
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="inputCity">
+                            <label class="effieldlabel" for="signUp_utility_location_city">
                                 City:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="inputCity" required value="" maxlength="30">
+                            <input type="text" class="" id="signUp_utility_location_city" required value="" maxlength="30">
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="inputState">
+                            <label class="effieldlabel" for="signUp_utility_location_state">
                                 State:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="inputState" required value="" maxlength="30">
+                            <input type="text" class="" id="signUp_utility_location_state" required value="" maxlength="30">
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="inputZip">
+                            <label class="effieldlabel" for="signUp_utility_location_zipcode">
                                 Zip Code:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="inputZip" required value="" maxlength="30">
+                            <input type="text" class="" id="signUp_utility_location_zipcode" required value="" maxlength="30">
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="inputPhone">
+                            <label class="effieldlabel" for="signUp_utility_phone">
                                 Phone:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="tel" class="" id="inputPhone" required value="" maxlength="30">
+                            <input type="tel" class="" id="signUp_utility_phone" required value="" maxlength="30">
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="inputEmail">
+                            <label class="effieldlabel" for="signUp_utility_email">
                                 Email:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="email" class="" id="inputEmail" required value="" maxlength="30">
+                            <input type="email" class="" id="signUp_utility_email" required value="" maxlength="30">
                         </div>
                     </div>
                     <div class="section-userFeedback">
                         <div class="effield">
-                            <label class="effieldlabel" for="inputUserFeedback">
+                            <label class="effieldlabel" for="signUp_mostExcited">
                                 What are you most excited about for the offer?<div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="inputUserFeedback" required>
+                            <select class="rawcontrol" id="signUp_mostExcited" required>
                                 <option value="">---</option>
                                 <option value="1">Having a steady bill</option>
                                 <option value="2">Auto-payments</option>
@@ -653,8 +649,8 @@
                     </div>
                     <div class="section-TC">
                         <div class="effield">
-                            <input type="checkbox" class="" id="checkTC" value="on">
-                            <label class="effieldlabel efCheckboxStyleLabel" for="checkTC">
+                            <input type="checkbox" class="" id="signUp_legal_accepted" value="on">
+                            <label class="effieldlabel efCheckboxStyleLabel" for="signUp_legal_accepted">
                                 I agree to the <a href="https://www.thesimple.com/legal/flatbill-terms-and-conditions">Terms and Conditions</a>
                                 and <a href="https://www.thesimple.com/legal/privacy">Privacy Policy</a>.
                             </label>

@@ -1,5 +1,5 @@
 function verifyCompatible(){
-    if (document.getElementById("checkVerifyCompatibility").checked === true) {
+    if (document.getElementById("signUp_compatible_isVerified").checked === true) {
         toggleInputEditable(false);
     } else {
         toggleInputEditable(true);
