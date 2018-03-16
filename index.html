@@ -144,7 +144,7 @@
             div_setVisible('div_signUp_legal_accepted_fixme', false, 'inline');
         };
         function submit_cancel() {
-            gotoPage(URL_FLAT_BILL_LANDING);
+            gotoPage(URL_FLAT_BILL_SIGNUP);
         };
         function validateAndGetUserInput(dataElementId, dataType, allowEmptyData) {
             var validInput = true;
@@ -476,7 +476,7 @@
     <div class="wrapper">
         <div data-collapse="medium" data-animation="over-right" data-duration="400" data-ix="header" data-doc-height="1"
              class="main-menu w-nav" style="opacity: 1; transition: opacity 500ms;">
-            <div class="main-menu-container w-container"><a href="/" class="brand w-nav-brand"><img
+            <div class="main-menu-container w-container"><a href="https://www.thesimple.com/flatbill" class="brand w-nav-brand"><img
                     src="https://uploads-ssl.webflow.com/594acebf03437f1a14504b3f/594bce73dfb4c87a381aae1d_simple-logo-high-res%20(1).png"
                     width="1899.5"
                     srcset="https://uploads-ssl.webflow.com/594acebf03437f1a14504b3f/594bce73dfb4c87a381aae1d_simple-logo-high-res%20(1)-p-500.png 500w, https://uploads-ssl.webflow.com/594acebf03437f1a14504b3f/594bce73dfb4c87a381aae1d_simple-logo-high-res%20(1)-p-800.png 800w, https://uploads-ssl.webflow.com/594acebf03437f1a14504b3f/594bce73dfb4c87a381aae1d_simple-logo-high-res%20(1).png 3799w"
@@ -737,7 +737,7 @@
                 <div id="divButtonSubmissions_signUp" align="center">
 
                   <button id="btn_signup_enroll" onclick="submit_signUp();" class="disabled-button" style="font-style:bold" disabled>Enroll</button>
-                  <button id="btn_signup_cancel" onclick="submit_cancel();" class="light-button" style="margin-left:50px" disabled>Cancel</button>
+                  <button id="btn_signup_cancel" onclick="submit_cancel();" class="light-button" style="margin-left:50px">Cancel</button>
 
                 </div>
             </div>
