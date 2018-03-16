@@ -139,37 +139,9 @@ input[type=checkbox] {
   border-color: #008c99;
 }
 
-
 /* Hide all steps by default: */
 .tab, #section-TC, #section-LinkUtility, #divButtonSubmissions_signUp {
   display: none;
-}
-
-/* Make circles that indicate the steps of the form: */
-.step {
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbbbbb;
-  border: none;
-  border-radius: 50%;
-  display: inline-block;
-  opacity: 0.5;
-}
-
-/* Mark the active step: */
-.step.active {
-  opacity: 1;
-  background-color: #008c99;
-}
-
-/* Mark the steps that are finished and valid: */
-.step.finish {
-  background-color: #008c99;
-}
-
-.stepContainer {
-    margin: 20px 0;
 }
 
 .disabled-button {
@@ -183,4 +155,34 @@ input[type=checkbox] {
   color: #a6a6a6;
   background-color: #ebebeb;
   box-shadow: 0 0 0 0 #bbb;
+}
+
+#section-header {
+  border-bottom: solid #5F5F5F;
+  border-width: 1px;
+  font-weight: 300;
+}
+
+#section-subheader {
+  margin: 20px 0;
+}
+
+#div-goToNextPage {
+  margin-top: 20px;
+}
+
+.efbuttonfield {
+  background-color: #008c99;
+  color: #fff;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.efbuttonfield.disabled {
+  background-color: #ebebeb;
+  color:#a6a6a6;
+}
+
+.efbuttonfield button {
+  background-color: transparent;
 }

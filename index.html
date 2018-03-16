@@ -450,6 +450,26 @@
               enroll_button.classList.add('disabled-button');
             }
         };
+
+        function validate_first_page_info() {
+            var numOfThermostats = document.getElementById('signUp_total_thermostats_needed');
+            var numOfCWires = document.getElementById('signUp_total_cwires_needed');
+            var colorOfThermostat = document.getElementById('signUp_thermostat_color');
+            var hasWifi = document.getElementById('signUp_has_wifi_100_pct');
+            var hasAC = document.getElementById('signUp_has_central_ac');
+
+            if (numOfThermostats.options[numOfThermostats.selectedIndex].value !== "" &&
+                numOfCWires.options[numOfCWires.selectedIndex].value !== "" &&
+                colorOfThermostat.options[colorOfThermostat.selectedIndex].value !== "" &&
+                hasWifi.options[hasWifi.selectedIndex].value === "yes" &&
+                hasAC.options[hasAC.selectedIndex].value === "yes") {
+                document.getElementById("btnNextPage").disabled = false;
+                document.getElementById("btnNextPageContainer").classList.remove("disabled");
+            } else {
+                document.getElementById("btnNextPage").disabled = true;
+                document.getElementById("btnNextPageContainer").classList.add("disabled");
+            }
+        }
     </script>
     <style>
         .fixMe {
@@ -510,7 +530,7 @@
 
         <div class="container">
             <div class="narrowBox">
-                <div>
+                <div id="section-header">
                     <div>
                         <label>Thanks for your interest in signing up for the Simple Flat Bill! </label></div>
                     <div>
@@ -526,25 +546,19 @@
                             </label>
                     </div>
                 </div>
-                <hr/>
                 <form>
-                    <div>
+                    <div id="section-subheader">
                         <label class="effieldlabel">
                             In order to process your enrollment, we will need some additional information:
                         </label>
                     </div>
-                    <!-- Circles which indicates the steps of the form: -->
-                    <div class="stepContainer">
-                        <span class="step"></span>
-                        <span class="step"></span>
-                    </div>
 
-                    <div class="section-thermostatInfo tab">
+                    <div id="section-thermostatInfo" class="tab">
                         <div class="effield">
                             <label class="effieldlabel" for="signUp_total_thermostats_needed">
                                 How many thermostats do you need in your home?<div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="signUp_total_thermostats_needed" required disabled>
+                            <select class="rawcontrol" id="signUp_total_thermostats_needed" required disabled onchange="validate_first_page_info()">
                                 <option value="">---</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -556,7 +570,7 @@
                             <label class="effieldlabel" for="signUp_total_cwires_needed">
                                 How many C-Wire Adapters will you need?<div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="signUp_total_cwires_needed" required disabled>
+                            <select class="rawcontrol" id="signUp_total_cwires_needed" required disabled onchange="validate_first_page_info()">
                                 <option value="">---</option>
                                 <option value="0">0</option>
                                 <option value="1">1</option>
@@ -569,7 +583,7 @@
                             <label class="effieldlabel" for="signUp_thermostat_color">
                                 What color is your thermostat?<div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="signUp_thermostat_color" required disabled>
+                            <select class="rawcontrol" id="signUp_thermostat_color" required disabled onchange="validate_first_page_info()">
                                 <option value="">---</option>
                                 <option value="white">White</option>
                                 <option value="black">Black</option>
@@ -579,83 +593,83 @@
                             <label class="effieldlabel" for="signUp_has_wifi_100_pct">
                                 Do you have Wi-Fi in your home?  <div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="signUp_has_wifi_100_pct" required disabled>
+                            <select class="rawcontrol" id="signUp_has_wifi_100_pct" required disabled onchange="validate_first_page_info()">
                                 <option value="">---</option>
-                                <option value="0">Yes</option>
-                                <option value="1">No</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
                             </select>
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="signUp_has_central_ac">
                                 Do you have central AC?<div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="signUp_has_central_ac" required disabled>
+                            <select class="rawcontrol" id="signUp_has_central_ac" required disabled onchange="validate_first_page_info()">
                                 <option value="">---</option>
-                                <option value="0">Yes</option>
-                                <option value="1">No</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
                             </select>
                         </div>
                     </div>
-                    <div class="section-userInfo tab">
+                    <div id="section-userInfo" class="tab">
                         <div class="effield">
                             <label class="effieldlabel" for="signUp_utility_firstName">
                                 First Name:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="signUp_utility_firstName" required disabled value="" maxlength="30">
+                            <input type="text" class="" id="signUp_utility_firstName" required  value="" maxlength="30">
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="signUp_utility_lastName">
                                 Last Name:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="signUp_utility_lastName" required disabled value="" maxlength="30">
+                            <input type="text" class="" id="signUp_utility_lastName" required  value="" maxlength="30">
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="signUp_utility_location_address1">
                                 Address 1:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="signUp_utility_location_address1" required disabled value="" maxlength="30">
+                            <input type="text" class="" id="signUp_utility_location_address1" required  value="" maxlength="30">
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="signUp_utility_location_address2">
                                 Address 2:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="signUp_utility_location_address2" required disabled value="" maxlength="30">
+                            <input type="text" class="" id="signUp_utility_location_address2" required  value="" maxlength="30">
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="signUp_utility_location_city">
                                 City:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="signUp_utility_location_city" required disabled value="" maxlength="30">
+                            <input type="text" class="" id="signUp_utility_location_city" required  value="" maxlength="30">
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="signUp_utility_location_state">
                                 State:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="signUp_utility_location_state" required disabled value="" maxlength="30">
+                            <select class="rawcontrol" id="signUp_utility_location_state" required ><option value="">---</option><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option><option value="DC">District of Columbia</option></select>
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="signUp_utility_location_zipcode">
                                 Zip Code:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="signUp_utility_location_zipcode" required disabled value="" maxlength="30">
+                            <input type="text" class="" id="signUp_utility_location_zipcode" required  value="" maxlength="30">
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="signUp_utility_phone">
                                 Phone:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="tel" class="" id="signUp_utility_phone" required disabled value="" maxlength="30">
+                            <input type="tel" class="" id="signUp_utility_phone" required  value="" maxlength="30">
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="signUp_utility_email">
                                 Email:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="email" class="" id="signUp_utility_email" required disabled value="" maxlength="30">
+                            <input type="email" class="" id="signUp_utility_email" required  value="" maxlength="30">
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="signUp_mostExcited">
                                 What are you most excited about for the offer?<div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="signUp_mostExcited" disabled required>
+                            <select class="rawcontrol" id="signUp_mostExcited"  required>
                                 <option value="">---</option>
                                 <option value="1">Having a steady bill</option>
                                 <option value="2">Auto-payments</option>
@@ -665,16 +679,23 @@
                             </select>
                         </div>
                     </div>
-                    <div>
+                    <div id="div-goToNextPage">
                         <div style="overflow:auto;">
                             <div style="float:right;">
-                                <button type="button" id="btnTogglePage" onclick="nextPrev()">Next</button>
+                                <div id="btnNextPageContainer" class="effield efbuttonfield disabled">
+                                    <div>
+                                        <button type="button" class="button-primary rawcontrol disabled" id="btnNextPage" disabled onclick="nextPrev()">
+                                            <span style="vertical-align: top;">Next Section</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!--<button type="button" id="btnTogglePage" onclick="nextPrev()">Next</button>-->
                             </div>
                         </div>
                     </div>
                     <div id="section-TC">
                         <div class="effield">
-                            <input type="checkbox" class="" id="signUp_legal_accepted" disabled value="on" onchange="toggle_enroll_button();">
+                            <input type="checkbox" class="" id="signUp_legal_accepted"  value="on" onchange="toggle_enroll_button();">
                             <label class="effieldlabel efCheckboxStyleLabel" for="signUp_legal_accepted">
                                 I agree to the <a href="https://www.thesimple.com/legal/flatbill-terms-and-conditions">Terms and Conditions</a>
                                 and <a href="https://www.thesimple.com/legal/privacy">Privacy Policy</a>.
