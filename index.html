@@ -680,40 +680,40 @@
                   <div class="modal-content">
                     <span class="close" onclick="close_modal();">&times;</span>
                     Confirm the details associated your utility account:
-                    &nbsp;
-                    <BR />
-                    <UL>
-                        <!-- Added in OPS-15718 -->
-                        <LI> Your Utility:
-                            &nbsp;
-                            <select class="rawcontrol" id="signUp_utility_provider" required>
-                                <option>---</option>
-                                <option value="Southern California Edison">Southern California Edison</option>
-                            </select>
-                            <div id="div_signUp_utility_provider_fixme" class="fixMe">Fix Me!</div>
-                        </LI>
-                        <LI>Login UserID/Email:
-                            &nbsp;
-                            <input type="text" id="signUp_utility_login_userId" />
-                            &nbsp;
-                            <div id="div_signUp_utility_login_userId_fixme" class="fixMe">Fix Me!</div>
-                        </LI>
-                        <LI>
-                            Password:
-                            &nbsp;
-                            <input type="password" id="signUp_utility_password" />
-                            &nbsp;
-                            <div id="div_signUp_utility_password_fixme" class="fixMe">Fix Me!</div>
-                        </LI>
-                        <LI>
-                            Password (repeat):
-                            &nbsp;
-                            <input type="password" id="signUp_utility_password_repeat" />
-                            &nbsp;
-                            <div id="div_signUp_utility_password_repeat_fixme" class="fixMe">Fix Me!</div>
-                        </LI>
-                    </UL>
-                        <button id="myBtn" onclick="close_modal();" class="light-button">Done</button>
+
+                    <div class="effield">
+                        <label class="effieldlabel" for="signUp_utility_provider">
+                              Your Utility:<div class="requiredFieldFlag">*</div>
+                        </label>
+                        <select class="rawcontrol" id="signUp_utility_provider" required>
+                            <option value="">---</option>
+                            <option value="Southern California Edison">Southern California Edison</option>
+                        </select>
+                    </div>
+
+                    <div class="effield">
+                        <label class="effieldlabel" for="signUp_utility_login_userId">
+                            Login UserID/Email:<div class="requiredFieldFlag">*</div>
+                        </label>
+                        <input type="text" class="" id="signUp_utility_login_userId" required value="" maxlength="30">
+                    </div>
+
+                    <div class="effield">
+                        <label class="effieldlabel" for="signUp_utility_password">
+                            Password:<div class="requiredFieldFlag">*</div>
+                        </label>
+                        <input type="password" class="" id="signUp_utility_password" required value="" maxlength="30">
+                    </div>
+
+                    <div class="effield">
+                        <label class="effieldlabel" for="signUp_utility_password_repeat">
+                            Password (repeat):<div class="requiredFieldFlag">*</div>
+                        </label>
+                        <input type="password" class="" id="signUp_utility_password_repeat" required value="" maxlength="30">
+                    </div>
+                    <div style="padding:20px 0px 0px">
+                        <button id="myBtn" onclick="close_modal();" class="light-button">Link</button>
+                    </div>
                   </div>
 
                 </div>
