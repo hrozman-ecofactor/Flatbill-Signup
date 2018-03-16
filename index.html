@@ -1065,8 +1065,10 @@
                         <!-- Added in OPS-15718 -->
                         <LI> Your Utility:
                             &nbsp;
-                            <input type="text" id="signUp_utility_provider" />
-                            &nbsp;
+                            <select class="rawcontrol" id="signUp_utility_provider" required>
+                                <option>---</option>
+                                <option value="Southern California Edison">Southern California Edison</option>
+                            </select>
                             <div id="div_signUp_utility_provider_fixme" class="fixMe">Fix Me!</div>
                         </LI>
                         <LI>Login UserID/Email:
