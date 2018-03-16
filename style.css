@@ -186,3 +186,52 @@ input[type=checkbox] {
 .efbuttonfield button {
   background-color: transparent;
 }
+
+.selectFirstPage {
+
+}
+
+.col-9 {
+  width: 75%;
+  float: left;
+}
+
+.col-3 {
+  width: 25%;
+  float: left;
+}
+
+#btnNextPageContainer {
+  margin-top: 15px;
+}
+
+#btnEnrollContainer, #btnCancelContainer, #btnLinkUtilityContainer, #btnModalLinkContainer {
+  display: inline-block;
+}
+
+#btnEnrollContainer, #btnCancelContainer {
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px 15px 20px 15px;
+  min-width: 100px;
+}
+
+#section-LinkUtility {
+  margin: 20px 0;
+}
+
+#section-TC .effield {
+  text-align: center;
+}
+
+#btn_signup_enroll:disabled {
+    color: #a6a6a6;
+    background-color: #ebebeb;
+}
+
+#btnModalLinkContainer {
+  margin-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}

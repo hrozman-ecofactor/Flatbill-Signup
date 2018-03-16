@@ -563,11 +563,9 @@
             var enroll_button = document.getElementById('btn_signup_enroll');
 
             if (validUserData) {
-              enroll_button.classList.remove('disabled-button');
-              enroll_button.classList.add('dark-button');
+              enroll_button.classList.remove('disabled');
             } else {
-              enroll_button.classList.remove('dark-button');
-              enroll_button.classList.add('disabled-button');
+              enroll_button.classList.add('disabled');
             }
         };
 
@@ -675,59 +673,79 @@
 
                     <div id="section-thermostatInfo" class="tab">
                         <div class="effield">
-                            <label class="effieldlabel" for="signUp_total_thermostats_needed">
-                                How many thermostats do you need in your home?
-                            </label>
-                            <select class="rawcontrol" id="signUp_total_thermostats_needed" required disabled onchange="validate_first_page_info()">
-                                <option value="">---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                            </select>
+                            <div class="col-9">
+                                <label class="effieldlabel" for="signUp_total_thermostats_needed">
+                                    How many thermostats do you need in your home?
+                                </label>
+                            </div>
+                            <div class="col-3">
+                                <select class="selectFirstPage" id="signUp_total_thermostats_needed" required disabled onchange="validate_first_page_info()">
+                                    <option value="">---</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="signUp_total_cwires_needed">
-                                How many C-Wire Adapters will you need?
-                            </label>
-                            <select class="rawcontrol" id="signUp_total_cwires_needed" required disabled onchange="validate_first_page_info()">
-                                <option value="">---</option>
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                            </select>
+                            <div class="col-9">
+                                <label class="effieldlabel" for="signUp_total_cwires_needed">
+                                    How many C-Wire Adapters will you need?
+                                </label>
+                            </div>
+                            <div class="col-3">
+                                <select class="selectFirstPage" id="signUp_total_cwires_needed" required disabled onchange="validate_first_page_info()">
+                                    <option value="">---</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="signUp_thermostat_color">
-                                What color is your thermostat?
-                            </label>
-                            <select class="rawcontrol" id="signUp_thermostat_color" required disabled onchange="validate_first_page_info()">
-                                <option value="">---</option>
-                                <option value="white">White</option>
-                                <option value="black">Black</option>
-                            </select>
+                            <div class="col-9">
+                                <label class="effieldlabel" for="signUp_thermostat_color">
+                                    What color is your thermostat?
+                                </label>
+                            </div>
+                            <div class="col-3">
+                                <select class="selectFirstPage" id="signUp_thermostat_color" required disabled onchange="validate_first_page_info()">
+                                    <option value="">---</option>
+                                    <option value="white">White</option>
+                                    <option value="black">Black</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="signUp_has_wifi_100_pct">
-                                Do you have Wi-Fi in your home?
-                            </label>
-                            <select class="rawcontrol" id="signUp_has_wifi_100_pct" required disabled onchange="validate_first_page_info()">
-                                <option value="">---</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-                            </select>
+                            <div class="col-9">
+                                <label class="effieldlabel" for="signUp_has_wifi_100_pct">
+                                    Do you have Wi-Fi in your home?
+                                </label>
+                            </div>
+                            <div class="col-3">
+                                <select class="selectFirstPage" id="signUp_has_wifi_100_pct" required disabled onchange="validate_first_page_info()">
+                                    <option value="">---</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="signUp_has_central_ac">
-                                Do you have central AC?
-                            </label>
-                            <select class="rawcontrol" id="signUp_has_central_ac" required disabled onchange="validate_first_page_info()">
-                                <option value="">---</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-                            </select>
+                            <div class="col-9">
+                                <label class="effieldlabel" for="signUp_has_central_ac">
+                                    Do you have central AC?
+                                </label>
+                            </div>
+                            <div class="col-3">
+                                <select class="selectFirstPage" id="signUp_has_central_ac" required disabled onchange="validate_first_page_info()">
+                                    <option value="">---</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div id="section-userInfo" class="tab">
@@ -799,8 +817,8 @@
                             </select>
                         </div>
                     </div>
-                    <div id="div-goToNextPage">
-                        <div style="overflow:auto;">
+                    <div id="div-goToNextPage" style="clear: both">
+                        <div style="clear: both;">
                             <div style="float:right;">
                                 <div id="btnNextPageContainer" class="effield efbuttonfield disabled">
                                     <div>
@@ -813,6 +831,17 @@
                             </div>
                         </div>
                     </div>
+                    <div id="section-LinkUtility">
+                        <!-- Link to utility account -->
+                        <div id="btnLinkUtilityContainer" class="effield efbuttonfield">
+                            <div>
+                                <button type="button" class="button-primary rawcontrol" id="btnLinkUtilityAccount" onclick="link_utility_account()">
+                                    <span style="vertical-align: top;">Link your utility account</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!--<button id="btnLinkUtilityAccount" onclick="link_utility_account();" class="light-button" disabled>Link your utility account</button>-->
+                    </div>
                     <div id="section-TC">
                         <div class="effield">
                             <input type="checkbox" class="" id="signUp_legal_accepted"  value="on" onchange="toggle_enroll_button();">
@@ -823,10 +852,7 @@
                         </div>
                     </div>
                 </form>
-                <div id="section-LinkUtility" style="padding:50px 0px 50px">
-                    <!-- Link to utility account -->
-                    <button id="btnLinkUtilityAccount" onclick="link_utility_account();" class="light-button" disabled>Link your utility account</button>
-                </div>
+
                 <!-- The Modal -->
                 <div id="myModal" class="modal">
 
@@ -866,8 +892,15 @@
                         </label>
                         <input type="password" class="" id="signUp_utility_password_repeat" required value="" maxlength="30" onchange="toggle_enroll_button();">
                     </div>
-                    <div style="padding:20px 0px 0px">
-                        <button id="myBtn" onclick="close_modal();" class="light-button">Link</button>
+                    <!--<div style="padding:20px 0px 0px">-->
+                        <!--<button id="myBtn" onclick="close_modal();" class="light-button">Link</button>-->
+                    <!--</div>-->
+                      <div id="btnModalLinkContainer" class="effield efbuttonfield">
+                        <div>
+                            <button type="button" class="button-primary" id="myBtn" onclick="close_modal()">
+                                <span style="vertical-align: top;">Link</span>
+                            </button>
+                        </div>
                     </div>
                   </div>
 
@@ -875,9 +908,21 @@
 
                 <!-- Cancel and Submit buttons -->
                 <div id="divButtonSubmissions_signUp" align="center">
+                    <div id="btnEnrollContainer" class="effield efbuttonfield disabled">
+                        <div>
+                            <button type="button" class="button-primary rawcontrol disabled" id="btn_signup_enroll" disabled onclick="submit_signUp()">
+                                <span style="vertical-align: top;">Enroll</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="btnCancelContainer" class="effield efbuttonfield">
+                            <button type="button" class="button-primary rawcontrol disabled" id="btn_signup_cancel" disabled onclick="submit_cancel()">
+                                <span style="vertical-align: top;">Cancel</span>
+                            </button>
+                    </div>
 
-                  <button id="btn_signup_enroll" onclick="submit_signUp();" class="disabled-button" style="font-style:bold" disabled>Enroll</button>
-                  <button id="btn_signup_cancel" onclick="submit_cancel();" class="light-button" style="margin-left:50px">Cancel</button>
+                  <!--<button id="btn_signup_enroll1" onclick="submit_signUp();" class="disabled-button" style="font-style:bold" disabled>Enroll</button>-->
+                  <!--<button id="btn_signup_cancel1" onclick="submit_cancel();" class="light-button" style="margin-left:50px">Cancel</button>-->
 
                 </div>
             </div>
