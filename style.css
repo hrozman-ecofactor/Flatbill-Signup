@@ -40,7 +40,7 @@ input {
     margin-bottom: .1rem;
 }
 
-input[type=text], input[type=tel], input[type=email], select {
+input[type=text], input[type=tel], input[type=email], input[type=password], select {
     height: 30px;
     width: 99.5%;
     padding: 6px 8px;
