@@ -228,6 +228,10 @@ input[type=checkbox] {
   padding-right: 5px;
   margin: 10px 15px 20px 15px;
   min-width: 100px;
+  cursor: pointer;
+}
+#btnEnrollContainer.disabled {
+  cursor: default;
 }
 
 #section-LinkUtility {
