@@ -517,6 +517,24 @@
                 alert(msg);
             }
         };
+
+        function link_utility_account() {
+            var modal = document.getElementById('myModal');
+            modal.style.display = "block";
+        };
+
+        function close_modal() {
+            var modal = document.getElementById('myModal');
+            modal.style.display = "none";
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            var modal = document.getElementById('myModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
     </script>
     <style>
         .fixMe {
@@ -536,6 +554,44 @@
         .divSignup {
             background-color: #dbf5ff;
             padding: 53px;
+        }
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -699,33 +755,6 @@
                 &nbsp;
                 <BR />
                 <UL>
-                    <!-- Added in OPS-15718 -->
-                    <LI> Your Utility:
-                        &nbsp;
-                        <input type="text" id="signUp_utility_provider" />
-                        &nbsp;
-                        <div id="div_signUp_utility_provider_fixme" class="fixMe">Fix Me!</div>
-                    </LI>
-                    <LI>Login UserID/Email:
-                        &nbsp;
-                        <input type="text" id="signUp_utility_login_userId" />
-                        &nbsp;
-                        <div id="div_signUp_utility_login_userId_fixme" class="fixMe">Fix Me!</div>
-                    </LI>
-                    <LI>
-                        Password:
-                        &nbsp;
-                        <input type="password" id="signUp_utility_password" />
-                        &nbsp;
-                        <div id="div_signUp_utility_password_fixme" class="fixMe">Fix Me!</div>
-                    </LI>
-                    <LI>
-                        Password (repeat):
-                        &nbsp;
-                        <input type="password" id="signUp_utility_password_repeat" />
-                        &nbsp;
-                        <div id="div_signUp_utility_password_repeat_fixme" class="fixMe">Fix Me!</div>
-                    </LI>
                     <LI>
                         First Name:
                         &nbsp;
@@ -890,6 +919,51 @@
                 &nbsp;
                 <div id="div_signUp_legal_accepted_fixme" class="fixMe">Fix Me!</div>
                 <BR /><BR /><BR /><BR />
+
+                <!-- Link to utility account -->
+                <button id="myBtn" onclick="link_utility_account();" class="button w-button">Link your utility account</button>
+
+                <!-- The Modal -->
+                <div id="myModal" class="modal">
+
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span class="close" onclick="close_modal();">&times;</span>
+                    Confirm the details associated your utility account:
+                    &nbsp;
+                    <BR />
+                    <UL>
+                        <!-- Added in OPS-15718 -->
+                        <LI> Your Utility:
+                            &nbsp;
+                            <input type="text" id="signUp_utility_provider" />
+                            &nbsp;
+                            <div id="div_signUp_utility_provider_fixme" class="fixMe">Fix Me!</div>
+                        </LI>
+                        <LI>Login UserID/Email:
+                            &nbsp;
+                            <input type="text" id="signUp_utility_login_userId" />
+                            &nbsp;
+                            <div id="div_signUp_utility_login_userId_fixme" class="fixMe">Fix Me!</div>
+                        </LI>
+                        <LI>
+                            Password:
+                            &nbsp;
+                            <input type="password" id="signUp_utility_password" />
+                            &nbsp;
+                            <div id="div_signUp_utility_password_fixme" class="fixMe">Fix Me!</div>
+                        </LI>
+                        <LI>
+                            Password (repeat):
+                            &nbsp;
+                            <input type="password" id="signUp_utility_password_repeat" />
+                            &nbsp;
+                            <div id="div_signUp_utility_password_repeat_fixme" class="fixMe">Fix Me!</div>
+                        </LI>
+                        <button id="myBtn" onclick="close_modal();" class="button w-button">Done</button>
+                  </div>
+
+                </div>
 
                 <!-- Cancel and Submit buttons -->
                 <div id="divButtonSubmissions_signUp">
