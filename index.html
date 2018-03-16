@@ -1,0 +1,917 @@
+<!doctype html>
+<html lang="en" data-wf-domain="flat-rage-billing.thesimple.com">
+<head>
+    <title>Simple - Flat Bill</title>
+    <meta content="UKXL8aIXWa3dE8hr36fqVj2HeUjGI2AMbL97uPRYr-E" name="google-site-verification"/>
+    <meta content="Webflow" name="generator"/>
+    <!-- From original thesimple.com website -->
+    <link href="https://daks2k3a4ib2z.cloudfront.net/594acebf03437f1a14504b3f/css/thesimple.webflow.3498c3b89.min.css" rel="stylesheet" type="text/css"/>
+    <!-- From FlatBill stage example -->
+    <link href="https://uploads-ssl.webflow.com/594acebf03437f1a14504b3f/css/thesimple.webflow.edc86382c.min.css" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+    <script type="text/javascript">WebFont.load({  google: {    families: ["Source Sans Pro:300,300italic,regular,600,600italic,700,700italic"]  }});</script>
+    <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif]-->
+    <script>!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+    <link href="https://daks2k3a4ib2z.cloudfront.net/594acebf03437f1a14504b3f/5a09fa38e1339f0001a86a9e_favicon-simple-32.ico" rel="shortcut icon" type="image/x-icon"/>
+    <link href="https://daks2k3a4ib2z.cloudfront.net/594acebf03437f1a14504b3f/59966e1dab717100012b7956_simple-logo-link.png" rel="apple-touch-icon"/>
+    <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', 'UA-107304173-1', 'auto');ga('send', 'pageview');</script>
+    <script>
+        var DEBUG_MODE = false;
+        //DEBUG_MODE = true; // Allow local debugging
+
+        var FORM_TYPE_SIGNUP = "signUp";
+        //var URL_FLAT_BILL_LANDING = "https://thesimple.webflow.io/dummy-flatbill-landing"; // Test dummy page
+        //var URL_FLAT_BILL_LANDING = "https://thesimple.webflow.io/flat-bill"; // Stage env
+        var URL_FLAT_BILL_LANDING = "https://www.thesimple.com/flat-bill"; // Prod env
+        //var URL_FLAT_BILL_THANKS = "https://thesimple.webflow.io/dummy-flatbill-thank-you"; // Test dummy page
+        //var URL_FLAT_BILL_THANKS = "https://thesimple.webflow.io/flatbill-thank-you"; // Stage env
+        var URL_FLAT_BILL_THANKS = "https://www.thesimple.com/flat-bill-thank-you"; // Prod env
+        var URL_FLAT_BILL_SIGNUP = "https://flatbill.thesimple.com/pilot/signup";
+        var XHR_TS = new xhrCreateRequest();
+
+        function debug_ShowJsonResponse(XhrResponse) {
+            console.log('[ERROR] Ajax Response:');
+            console.log('Raw Data:');
+            console.dir(XhrResponse);
+        };
+        function xhrCreateRequest() {
+            // This function will create the AJAX object...
+            var XHRObject;
+            if (window.ActivateObject) { // We have IE...
+                try {
+                    XHRObject = new ActiveXObject("Microsoft.XMLHTTP");
+                } catch (e) {
+                    XHRObject = false;
+                } // End catch(e)...
+            } else { // We have Chrome, Firefox, Opera, etc...
+                try {
+                    XHRObject = new XMLHttpRequest();
+                } catch (e) {
+                    XHRObject = false;
+                } // End catch(e)...
+            } // End else()...
+            if (XHRObject === false) {
+                alert("[ERROR] xhrCreateRequest() - Failed to create XMLHttpRequest object.");
+            } else {
+                return XHRObject;
+            } // End else...
+        };
+        function xhrRunAjax(xhrMethod, xhrUrl, xhrJsonBody) {
+            if (xhrMethod !== "POST" && xhrMethod !== "GET") {
+                alert("[ERROR] xhrRunAjax()\n\nInvalid Method:  " + xhrMethod);
+                return;
+            } // End if...
+            var useAsync = true;   // Non-Async is deprecated...
+            if (XHR_TS.readyState === 0 || XHR_TS.readyState === 4) {
+                // Set the function which will handle the Ajax response...
+                XHR_TS.onreadystatechange = xhrHandleResponse;
+                // Open the connection...
+                XHR_TS.open(xhrMethod, xhrUrl, useAsync);
+                // Set the header, so that it allows parameters to be passed...
+                XHR_TS.setRequestHeader("Content-Type", "application/json");
+                // Send the request, with POST JSON Body...
+                XHR_TS.send(xhrJsonBody);
+            } else {
+                setTimeout('runAjax(\"' + xhrMethod + '\", \"' + xhrUrl + '\")', 1000);  // Wait for 1 second...
+            } // End else...
+        };
+        function xhrHandleResponse() {
+            if (XHR_TS.readyState === 4) { // Response is ready and done communicating...
+                if (XHR_TS.status === 200) { // Successful, No errors...
+                    if(DEBUG_MODE) {
+                        debug_ShowJsonResponse(XHR_TS);
+                    } else {
+                        gotoPage(URL_FLAT_BILL_THANKS);
+                    }
+                } else {    // We had some error...
+                    var errorStr = XHR_TS.statusText;
+                    if (XHR_TS.status === 0)
+                        errorStr = "Cross-Site (Access Denied)  " + URL_FLAT_BILL_SIGNUP;
+                    alert("[ERROR] xhrHandleResponse()\n\nFailed AJAX Response: " + XHR_TS.status + " - " + errorStr);
+                    debug_ShowJsonResponse(XHR_TS);
+                } // End else(status === 200)...
+            } // End else(readystate === 4)...
+        };
+        function div_setVisible(divName, isVisible, divVisibleStyle) {
+            d = document.getElementById(divName);
+            if(d) {
+                if(isVisible == false) {
+                    d.style.display = 'none';
+                    }
+                else {
+                    d.style.display = divVisibleStyle;
+                    };
+                };
+        };
+        function gotoPage(PageUrl) {
+            if(PageUrl) {
+                if(DEBUG_MODE == true)
+                    window.location.href = PageUrl; // Allows back button to be used after POST
+                else
+                    window.location.replace(PageUrl); // Disables back button after POST
+                };
+        };
+        function init_signUp() {
+            div_setVisible('divForm_SignUp', true, 'block');
+            div_setVisible('div_signUp_compatible_isVerified_fixme', false, 'inline');
+            div_setVisible('div_signUp_total_cwires_needed_fixme', false, 'inline');
+            div_setVisible('div_signUp_total_thermostats_needed_fixme', false, 'inline');
+            div_setVisible('div_signUp_thermostat_color_fixme', false, 'inline');
+            div_setVisible('div_signUp_has_wifi_100_pct_fixme', false, 'inline');
+            div_setVisible('div_signUp_has_central_ac_fixme', false, 'inline');
+            //div_setVisible('div_signUp_utility_isCustomer_fixme', false, 'inline');
+            div_setVisible('div_signUp_utility_provider_fixme', false, 'inline');
+            div_setVisible('div_signUp_utility_login_userId_fixme', false, 'inline');
+            div_setVisible('div_signUp_utility_password_fixme', false, 'inline');
+            div_setVisible('div_signUp_utility_password_repeat_fixme', false, 'inline');
+            div_setVisible('div_signUp_utility_firstName_fixme', false, 'inline');
+            div_setVisible('div_signUp_utility_lastName_fixme', false, 'inline');
+            div_setVisible('div_signUp_utility_location_address1_fixme', false, 'inline');
+            div_setVisible('div_signUp_utility_location_address2_fixme', false, 'inline');
+            div_setVisible('div_signUp_utility_location_city_fixme', false, 'inline');
+            div_setVisible('div_signUp_utility_location_state_fixme', false, 'inline');
+            div_setVisible('div_signUp_utility_location_zipcode_fixme', false, 'inline');
+            div_setVisible('div_signUp_utility_phone_fixme', false, 'inline');
+            div_setVisible('div_signUp_utility_email_fixme', false, 'inline');
+            //div_setVisible('div_signUp_utility_levelPayToday_heardOf_fixme', false, 'inline');
+            //div_setVisible('div_signUp_utility_levelPayToday_isMember_fixme', false, 'inline');
+            //div_setVisible('div_signUp_soCal_isCustomer_fixme', false, 'inline');
+            //div_setVisible('div_signUp_soCal_gasNumber_fixme', false, 'inline');
+            div_setVisible('div_signUp_mostExcited_fixme', false, 'inline');
+            //div_setVisible('div_signUp_recommendToOthers_fixme', false, 'inline');
+            //div_setVisible('div_signUp_offerToOthers_fixme', false, 'inline');
+            div_setVisible('div_signUp_legal_accepted_fixme', false, 'inline');
+        };
+        function submit_cancel() {
+            gotoPage(URL_FLAT_BILL_LANDING);
+        };
+        function validateAndGetUserInput(dataElementId, dataType, allowEmptyData) {
+            var validInput = true;
+            dataElementId_fixme = 'div_' + dataElementId + '_fixme';
+            //if(DEBUG_MODE) { console.log('DataElementId_FixMe:  ' + dataElementId_fixme); };
+            e = document.getElementById(dataElementId);
+            if(dataType == 'select') {
+                v = e.options[e.selectedIndex].value;
+                if(v == '---') {
+                    v = '';
+                }
+            } else if(dataType == 'textbox_email') {
+                v = e.value;
+                if(v == '---') {
+                    v = '';
+                } else {
+                    // Taken from:  https://www.w3resource.com/javascript/form/email-validation.php
+                    // It doesn't allow '+' in the email address
+                    //if((/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v)) == false) {
+                    //    validInput = false;
+                    //}
+                    // From: https://stackoverflow.com/questions/46155/how-can-you-validate-an-email-address-in-javascript/38544440#38544440
+                    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    validInput = re.test(v);
+                }
+            } else if(dataType == 'checkbox') {
+                v = e.checked;
+                if(allowEmptyData == false) {
+                    if(v == false) {
+                        validInput = false;
+                    }
+                }
+            } else {
+                v = e.value;
+                if(v == '---') {
+                    v = '';
+                }
+            }
+            if(v == '') {
+                if(allowEmptyData == false)
+                    validInput = false;
+            }
+            if(validInput == false)
+                div_setVisible(dataElementId_fixme, true, 'inline');
+            else
+                div_setVisible(dataElementId_fixme, false, 'inline');
+            return [v, validInput];
+        };
+        function submit_signUp() {
+            validUserData = true;
+            passwordsMatch = true;
+            // UTC date (used by submission date)
+            d = new Date();
+            var dYear = '' + d.getUTCFullYear(),
+                dMonth = '' + (d.getUTCMonth()+1),
+                dDay = '' + d.getUTCDate(),
+                dHour = '' + d.getUTCHours(),
+                dMin = '' + d.getUTCMinutes(),
+                dSec = '' + d.getUTCSeconds(),
+                dMilliSec = '' + d.getUTCMilliseconds()
+                ;
+            if(dMonth.length < 2) dMonth = '0' + dMonth;
+            if(dDay.length < 2) dDay = '0' + dDay;
+            if(dHour.length < 2) dHour = '0' + dHour;
+            if(dMin.length < 2) dMin = '0' + dMin;
+            if(dSec.length < 2) dSec = '0' + dSec;
+            sUtcNow = dYear + "-" + dMonth + "-" + dDay + " " +
+                dHour + ":" + dMin + ":" + dSec + "." + dMilliSec +
+                " GMT+0";
+
+            // signUp_compatible_isVerified
+            results = validateAndGetUserInput('signUp_compatible_isVerified', 'select', false);
+            sCompatibleIsVerified = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+            bCompatibleIsVerified = false;
+            if(sCompatibleIsVerified == "yes")
+                bCompatibleIsVerified = true;
+
+            // signUp_total_cwires_needed
+            results = validateAndGetUserInput('signUp_total_cwires_needed', 'select', false);
+            sTotalCwiresNeeded = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+
+            // signUp_total_thermostats_needed
+            results = validateAndGetUserInput('signUp_total_thermostats_needed', 'select', false);
+            sTotalThermostatsNeeded = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+
+            // signUp_thermostat_color
+            results = validateAndGetUserInput('signUp_thermostat_color', 'select', false);
+            sThermostatColor = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+
+            // signUp_has_wifi_100_pct
+            results = validateAndGetUserInput('signUp_has_wifi_100_pct', 'select', false);
+            sWifiConnectivity = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+            bWifiConnectivity = false;
+            if(sWifiConnectivity == "yes")
+                bWifiConnectivity = true;
+
+            // signUp_has_central_ac
+            results = validateAndGetUserInput('signUp_has_central_ac', 'select', false);
+            sCentralAc = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+            bCentralAc = false;
+            if(sCentralAc == "yes")
+                bCentralAc = true;
+
+            // signUp_utility_isCustomer
+            //results = validateAndGetUserInput('signUp_utility_isCustomer', 'select', false);
+            //sUtilityIsCustomer = results[0];
+            //isValid = results[1];
+            //if(isValid == false)
+            //    validUserData = false;
+            //bUtilityIsCustomer = false;
+            //if(sUtilityIsCustomer == "yes")
+            //    bUtilityIsCustomer = true;
+
+            // signUp_utility_provider
+            results = validateAndGetUserInput('signUp_utility_provider', 'textbox', false);
+            sUtilityProvider = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+                
+            // signUp_utility_login_userId
+            results = validateAndGetUserInput('signUp_utility_login_userId', 'textbox', false);
+            sUtilityLoginUserId = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+
+            // signUp_utility_password
+            results = validateAndGetUserInput('signUp_utility_password', 'textbox_password', false);
+            sUtilityPassword = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+
+            // signUp_utility_password_repeat
+            results = validateAndGetUserInput('signUp_utility_password_repeat', 'textbox_password', false);
+            sUtilityPasswordRepeat = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+
+            // Make sure that passwords match
+            if(sUtilityPassword == sUtilityPasswordRepeat) {
+                passwordsMatch = true;
+            } else {
+                if(DEBUG_MODE)
+                    console.log("[DEBUG] Passwords don't match.\nP1:  " + sUtilityPassword + "\nP2:  " + sUtilityPasswordRepeat);
+                validUserData = false;
+                passwordsMatch = false;
+                div_setVisible('div_signUp_utility_password_fixme', true, 'inline');
+                div_setVisible('div_signUp_utility_password_repeat_fixme', true, 'inline');
+            }
+
+            // signUp_utility_firstName
+            results = validateAndGetUserInput('signUp_utility_firstName', 'textbox', false);
+            sUtilityFirstName = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+
+            // signUp_utility_lastName
+            results = validateAndGetUserInput('signUp_utility_lastName', 'textbox', false);
+            sUtilityLastName = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+
+            // signUp_utility_location_address1
+            results = validateAndGetUserInput('signUp_utility_location_address1', 'textbox', false);
+            sUtilityLocationAddress1 = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+
+            // signUp_utility_location_address2
+            results = validateAndGetUserInput('signUp_utility_location_address2', 'textbox', true);
+            sUtilityLocationAddress2 = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+
+            // signUp_utility_location_city
+            results = validateAndGetUserInput('signUp_utility_location_city', 'textbox', false);
+            sUtilityLocationCity = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+
+            // signUp_utility_location_state
+            results = validateAndGetUserInput('signUp_utility_location_state', 'textbox', false);
+            sUtilityLocationState = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+
+            // signUp_utility_location_zipcode
+            results = validateAndGetUserInput('signUp_utility_location_zipcode', 'textbox', false);
+            sUtilityLocationZipcode = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+
+            // signUp_utility_phone
+            results = validateAndGetUserInput('signUp_utility_phone', 'textbox', false);
+            sUtilityPhone = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+
+            // signUp_utility_email
+            results = validateAndGetUserInput('signUp_utility_email', 'textbox_email', false);
+            sUtilityEmail = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+
+            // OPS-15178 CR to remove this
+            // signUp_sce_levelPayToday_heardOf
+            //results = validateAndGetUserInput('signUp_sce_levelPayToday_heardOf', 'select', false);
+            //sSceLevelPayTodayHeardOf = results[0];
+            //isValid = results[1];
+            //if(isValid == false)
+            //    validUserData = false;
+            //bSceLevelPayTodayHeardOf = false;
+            //if(sSceLevelPayTodayHeardOf == "yes")
+            //    bSceLevelPayTodayHeardOf = true;
+
+            // OPS-15178 CR to remove this
+            // signUp_sce_levelPayToday_isMember
+            //if(bSceLevelPayTodayHeardOf == true) {
+                // Since they heard of Level-Pay Today, we require they answer if they are a member or not
+            //    results = validateAndGetUserInput('signUp_sce_levelPayToday_isMember', 'select', false);
+            //} else {
+                // Allow empty results if they never heard of the level-pay today program
+            //    results = validateAndGetUserInput('signUp_sce_levelPayToday_isMember', 'select', true);
+            //};
+            //sSceLevelPayTodayIsMember = results[0];
+            //isValid = results[1];
+            //if(isValid == false)
+            //    validUserData = false;
+            //bSceLevelPayTodayIsMember = false;
+            //if(sSceLevelPayTodayIsMember == "yes")
+            //    bSceLevelPayTodayIsMember = true;
+
+            // OPS-15178 CR to remove this
+            // signUp_soCal_isCustomer
+            //results = validateAndGetUserInput('signUp_soCal_isCustomer', 'select', false);
+            //sSoCalIsCustomer = results[0];
+            //isValid = results[1];
+            //if(isValid == false)
+            //    validUserData = false;
+            //bSoCalIsCustomer = false;
+            //if(sSoCalIsCustomer == "yes")
+            //    bSoCalIsCustomer = true;
+
+            // OPS-15178 CR to remove this
+            // signUp_soCal_gasNumber
+            //if(bSoCalIsCustomer == true) {
+            //    // Since they are a customer, we require their account number for SoCal Gas
+            //    results = validateAndGetUserInput('signUp_soCal_gasNumber', 'textbox', false);
+            //} else {
+            //    // Allow empty results if they are not a SoCal Gas Customer
+            //    results = validateAndGetUserInput('signUp_soCal_gasNumber', 'textbox', true);
+            //};
+            //sSoCalGasNumber = results[0];
+            //isValid = results[1];
+            //if(isValid == false)
+            //    validUserData = false;
+
+            // signUp_mostExcited
+            results = validateAndGetUserInput('signUp_mostExcited', 'select', false);
+            sMostExcited = results[0];
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+            
+            // OPS-15718 CR to removed this
+            // signUp_recommendToOthers
+            //results = validateAndGetUserInput('signUp_recommendToOthers', 'select', false);
+            //sRecommendToOthers = results[0];
+            //isValid = results[1];
+            //if(isValid == false)
+            //    validUserData = false;
+            //bRecommendToOthers = false;
+            //if(sRecommendToOthers == "yes")
+            //    bRecommendToOthers = true;
+
+            // OPS-15178 CR to remove this
+            // signUp_offerToOthers
+            //results = validateAndGetUserInput('signUp_offerToOthers', 'select', false);
+            //sOfferToOthers = results[0];
+            //isValid = results[1];
+            //if(isValid == false)
+            //    validUserData = false;
+            //bOfferToOthers = false;
+            //if(sOfferToOthers == "yes")
+            //    bOfferToOthers = true;
+
+            // signUp_legal_accepted
+            // We don't need to save any data, but just make sure that they check the checkbox
+            results = validateAndGetUserInput('signUp_legal_accepted', 'checkbox', false);
+            isValid = results[1];
+            if(isValid == false)
+                validUserData = false;
+
+            // Build the json object to submit
+            joDetails = {
+                "submissionDate": sUtcNow,
+                "submissionType": FORM_TYPE_SIGNUP,
+                "compatible_isVerified": bCompatibleIsVerified,
+                "total_thermostats_needed": sTotalThermostatsNeeded,
+                "total_cwires_needed": sTotalCwiresNeeded,
+                "thermostat_color": sThermostatColor,
+                "hasWifiConnectivity": bWifiConnectivity,
+                "hasCentralAc": bCentralAc,
+                "utility_provider": sUtilityProvider,
+                "utility_login_userId": sUtilityLoginUserId,
+                "utility_password": sUtilityPassword,
+                "utility_firstName": sUtilityFirstName,
+                "utility_lastName": sUtilityLastName,
+                "utility_location_address1": sUtilityLocationAddress1,
+                "utility_location_address2": sUtilityLocationAddress2,
+                "utility_location_city": sUtilityLocationCity,
+                "utility_location_state": sUtilityLocationState,
+                "utility_location_zipcode": sUtilityLocationZipcode,
+                "utility_phone": sUtilityPhone,
+                "utility_email": sUtilityEmail,
+                "mostExcited": sMostExcited
+                };
+                // Unused Values
+                //"offerToOthers": bOfferToOthers,
+                //"sce_isCustomer": sSceIsCustomer,
+                //"sce_levelPayToday_heardOf": bSceLevelPayTodayHeardOf,
+                //"sce_levelPayToday_isMember": sSceLevelPayTodayIsMember,
+                //"socal_isCustomer": bSoCalIsCustomer,
+                //"socal_gasNumber": sSoCalGasNumber,
+                //"recommendToOthers": bRecommendToOthers,
+
+            if(DEBUG_MODE) {
+                console.log("[DEBUG] Submission (signup):");
+                console.dir(joDetails);
+            }
+            if(validUserData) {
+                if(DEBUG_MODE != true) {
+                    xhrRunAjax("POST", URL_FLAT_BILL_SIGNUP, JSON.stringify(joDetails));
+                    }
+            } else {
+                msgInvalid = "Please provide valid input for all questions.  Look for the 'Fix Me' text which indicates the data which needs corrections.";
+                if(passwordsMatch == false)
+                    msg = msgInvalid + "\n\nPasswords don't match."
+                else
+                msg = msgInvalid
+                alert(msg);
+            }
+        };
+    </script>
+    <style>
+        .fixMe {
+            font-style: italic;
+            color: red;
+            font-weight: 600;
+            padding: 3px;
+            padding-left: 5px;
+            padding-right: 5px;
+            display: none; /* Options are: none, block, or inline */
+            /* Unused styles
+            display: inline;
+            visibility: visible;
+            background-color: pink;
+            */
+        }
+        .divSignup {
+            background-color: #dbf5ff;
+            padding: 53px;
+        }
+    </style>
+</head>
+<body class="body" onload="init_signUp();">
+<div>
+    <div class="wrapper">
+        <div data-collapse="medium" data-animation="over-right" data-duration="400" data-ix="header" data-doc-height="1"
+             class="main-menu w-nav" style="opacity: 1; transition: opacity 500ms;">
+            <div class="main-menu-container w-container"><a href="/" class="brand w-nav-brand"><img
+                    src="https://uploads-ssl.webflow.com/594acebf03437f1a14504b3f/594bce73dfb4c87a381aae1d_simple-logo-high-res%20(1).png"
+                    width="1899.5"
+                    srcset="https://uploads-ssl.webflow.com/594acebf03437f1a14504b3f/594bce73dfb4c87a381aae1d_simple-logo-high-res%20(1)-p-500.png 500w, https://uploads-ssl.webflow.com/594acebf03437f1a14504b3f/594bce73dfb4c87a381aae1d_simple-logo-high-res%20(1)-p-800.png 800w, https://uploads-ssl.webflow.com/594acebf03437f1a14504b3f/594bce73dfb4c87a381aae1d_simple-logo-high-res%20(1).png 3799w"
+                    sizes="(max-width: 479px) 36vw, 110px" class="logo"></a>
+                <div class="text-block-5"><strong>Flat Bill</strong></div>
+                <div class="navbar-spacer w-hidden-main"></div>
+                <nav role="navigation" class="nav-menu w-nav-menu">
+                    <div class="mobile-menu-header w-hidden-main"></div>
+                </nav>
+                <div class="menu-button w-nav-button">
+                    <div class="hamburger-icon w-icon-nav-menu"></div>
+                </div>
+                <nav role="navigation" class="nav-menu w-nav-menu">
+                    <div class="mobile-menu-header w-hidden-main"></div>
+                    <div class="navbar-spacer w-hidden-medium w-hidden-small w-hidden-tiny"></div>
+                    <a href="https://www.thesimple.com/flatbill"
+                        class="nav-link w-nav-link"
+                        style="max-width: 940px;">Home</a>
+                    <a href="https://flatbill.thesimple.com/pilot/signup"
+                        target="_blank" class="nav-link w-nav-link"
+                        style="max-width: 940px; white-space: nowrap;">Sign Up</a>
+                    <a target="_blank"
+                        href="/flat-bill-faqs"
+                        class="nav-link w-nav-link"
+                        style="max-width: 940px;">FAQs</a><a
+                        target="_blank" href="http://www.thesimple.com/legal/flatbill-terms-and-conditions"
+                        class="nav-link w-nav-link" style="max-width: 940px;">Legal</a></nav>
+            </div>
+            <div class="w-nav-overlay" data-wf-ignore=""></div>
+        </div>
+
+        <div class="w-container">
+
+            <div id="divForm_SignUp" class="divSignup">
+                Thanks for your interest in signing up for the Simple Flat Bill!
+
+                <BR /><BR />
+
+                Before continuing, please determine if your home wiring is compatible with the Simple thermostat:
+                &nbsp;
+                <UL>
+                    <LI>
+                        <a href=" https://www.thesimple.com/compatibility"
+                           target="_blank">
+                           https://www.thesimple.com/compatibility</a>
+                    </LI>
+                    <LI>
+                        Have you verified that your home wiring is compatible?
+                       &nbsp;
+                        <SELECT id="signUp_compatible_isVerified">
+                            <OPTION value="---" selected="selected">---</OPTION>
+                            <OPTION value="yes">Yes</OPTION>
+                            <OPTION value="no">No</OPTION>
+                        </SELECT>
+                        &nbsp;
+                        <div id="div_signUp_compatible_isVerified_fixme" class="fixMe">Fix Me!</div>
+                    </LI>
+                </UL>
+
+                <BR />
+
+                <HR />
+
+                <BR />
+
+                <I>In order to process your enrollment, we will need some additional information:</I>
+
+                <BR />
+
+                <BR />
+                How many thermostats do you need in your home?
+                &nbsp;
+                <SELECT id="signUp_total_thermostats_needed">
+                    <OPTION value="---" selected="selected">---</OPTION>
+                    <OPTION value="1">1</OPTION>
+                    <OPTION value="2">2</OPTION>
+                    <OPTION value="2">3</OPTION>
+                    <OPTION value="2">4</OPTION>
+                </SELECT>
+                &nbsp;
+                <div id="div_signUp_total_thermostats_needed_fixme" class="fixMe">Fix Me!</div>
+
+                <BR /><BR />
+
+                How many C-Wire Adapters will you need?
+                &nbsp;
+                <SELECT id="signUp_total_cwires_needed">
+                    <OPTION value="---" selected="selected">---</OPTION>
+                    <OPTION value="0">0</OPTION>
+                    <OPTION value="1">1</OPTION>
+                    <OPTION value="2">2</OPTION>
+                    <OPTION value="2">3</OPTION>
+                    <OPTION value="2">4</OPTION>
+                </SELECT>
+                &nbsp;
+                <div id="div_signUp_total_cwires_needed_fixme" class="fixMe">Fix Me!</div>
+
+
+                <BR /><BR />
+
+                What color thermostat?
+                &nbsp;
+                <SELECT id="signUp_thermostat_color">
+                    <OPTION value="---" selected="selected">---</OPTION>
+                    <OPTION value="white">White</OPTION>
+                    <OPTION value="black">Black</OPTION>
+                </SELECT>
+                <div id="div_signUp_thermostat_color_fixme" class="fixMe">Fix Me!</div>
+                &nbsp;
+
+                <BR /><BR />
+
+                Do you have Wi-Fi in your home?
+                &nbsp;
+                <SELECT id="signUp_has_wifi_100_pct">
+                    <OPTION value="---" selected="selected">---</OPTION>
+                    <OPTION value="yes">Yes</OPTION>
+                    <OPTION value="no">No</OPTION>
+                </SELECT>
+                &nbsp;
+                <div id="div_signUp_has_wifi_100_pct_fixme" class="fixMe">Fix Me!</div>
+
+                <BR /><BR />
+
+                Do you have central AC?
+                &nbsp;
+                <SELECT id="signUp_has_central_ac">
+                    <OPTION value="---" selected="selected">---</OPTION>
+                    <OPTION value="yes">Yes</OPTION>
+                    <OPTION value="no">No</OPTION>
+                </SELECT>
+                &nbsp;
+                <div id="div_signUp_has_central_ac_fixme" class="fixMe">Fix Me!</div>
+
+                <BR /><BR />
+
+                <!-- OPS-15178 CR wanted this removed
+                Are you an SCE customer?
+                &nbsp;
+                <SELECT id="signUp_utility_isCustomer">
+                    <OPTION value="---" selected="selected">---</OPTION>
+                    <OPTION value="yes">Yes</OPTION>
+                    <OPTION value="no">No</OPTION>
+                </SELECT>
+                &nbsp;
+                <div id="div_signUp_utility_isCustomer_fixme" class="fixMe">Fix Me!</div>
+
+                <BR /><BR />
+                -->
+
+                Confirm the details associated your utility account:
+                &nbsp;
+                <BR />
+                <UL>
+                    <!-- Added in OPS-15718 -->
+                    <LI> Your Utility:
+                        &nbsp;
+                        <input type="text" id="signUp_utility_provider" />
+                        &nbsp;
+                        <div id="div_signUp_utility_provider_fixme" class="fixMe">Fix Me!</div>
+                    </LI>
+                    <LI>Login UserID/Email:
+                        &nbsp;
+                        <input type="text" id="signUp_utility_login_userId" />
+                        &nbsp;
+                        <div id="div_signUp_utility_login_userId_fixme" class="fixMe">Fix Me!</div>
+                    </LI>
+                    <LI>
+                        Password:
+                        &nbsp;
+                        <input type="password" id="signUp_utility_password" />
+                        &nbsp;
+                        <div id="div_signUp_utility_password_fixme" class="fixMe">Fix Me!</div>
+                    </LI>
+                    <LI>
+                        Password (repeat):
+                        &nbsp;
+                        <input type="password" id="signUp_utility_password_repeat" />
+                        &nbsp;
+                        <div id="div_signUp_utility_password_repeat_fixme" class="fixMe">Fix Me!</div>
+                    </LI>
+                    <LI>
+                        First Name:
+                        &nbsp;
+                        <input type="text" id="signUp_utility_firstName" />
+                        &nbsp;
+                        <div id="div_signUp_utility_firstName_fixme" class="fixMe">Fix Me!</div>
+                    </LI>
+                    <LI>
+                        Last Name:
+                        &nbsp;
+                        <input type="text" id="signUp_utility_lastName" />
+                        &nbsp;
+                        <div id="div_signUp_utility_lastName_fixme" class="fixMe">Fix Me!</div>
+                    </LI>
+                    <LI> Home Location:
+                        <UL>
+                            <LI>
+                                Address 1: &nbsp;<input type="text" id="signUp_utility_location_address1" />
+                                &nbsp;
+                                <div id="div_signUp_utility_location_address1_fixme" class="fixMe">Fix Me!</div>
+                            </LI>
+                            <LI>
+                                Address 2: &nbsp;<input type="text" id="signUp_utility_location_address2" />
+                                &nbsp;
+                                <div id="div_signUp_utility_location_address2_fixme" class="fixMe">Fix Me!</div>
+                            </LI>
+                            <LI>
+                                City: &nbsp;<input type="text" id="signUp_utility_location_city" />
+                                &nbsp;
+                                <div id="div_signUp_utility_location_city_fixme" class="fixMe">Fix Me!</div>
+                            </LI>
+                            <LI>
+                                State: &nbsp;<input type="text" id="signUp_utility_location_state" />
+                                &nbsp;
+                                <div id="div_signUp_utility_location_state_fixme" class="fixMe">Fix Me!</div>
+                            </LI>
+                            <LI>
+                                Zip Code: &nbsp;<input type="text" id="signUp_utility_location_zipcode" />
+                                &nbsp;
+                                <div id="div_signUp_utility_location_zipcode_fixme" class="fixMe">Fix Me!</div>
+                            </LI>
+                        </UL>
+                    </LI>
+                    <LI>
+                        Phone: &nbsp;<input type="text" id="signUp_utility_phone" />
+                        &nbsp;
+                        <div id="div_signUp_utility_phone_fixme" class="fixMe">Fix Me!</div>
+                    </LI>
+                    <LI>
+                        Email: &nbsp;
+                        <input type="text" id="signUp_utility_email" />
+                        &nbsp;
+                        <div id="div_signUp_utility_email_fixme" class="fixMe">Fix Me!</div>
+                    </LI>
+                </UL>
+
+                <BR />
+
+                <!-- OPS-15178 CR to removed this
+                Have you heard of Level-Pay Today (offered by SCE)?
+                &nbsp;
+                <SELECT id="signUp_utility_levelPayToday_heardOf">
+                    <OPTION value="---" selected="selected">---</OPTION>
+                    <OPTION value="yes">Yes</OPTION>
+                    <OPTION value="no">No</OPTION>
+                </SELECT>
+                &nbsp;
+                <div id="div_signUp_utility_levelPayToday_heardOf_fixme" class="fixMe">Fix Me!</div>
+                <UL>
+                    <LI>
+                        Are you a member of Level-Pay Today?
+                        &nbsp;
+                        <SELECT id="signUp_utility_levelPayToday_isMember">
+                            <OPTION value="---" selected="selected">---</OPTION>
+                            <OPTION value="yes">Yes</OPTION>
+                            <OPTION value="no">No</OPTION>
+                        </SELECT>
+                        &nbsp;
+                        <div id="div_signUp_utility_levelPayToday_isMember_fixme" class="fixMe">Fix Me!</div>
+                    </LI>
+                </UL>
+                -->
+
+                <!-- <BR /><BR /> -->
+
+                <!-- OPS-15178 CR to removed this
+                Are you a SoCal Gas Customer?
+                &nbsp;
+                <SELECT id="signUp_soCal_isCustomer">
+                    <OPTION value="---" selected="selected">---</OPTION>
+                    <OPTION value="yes">Yes</OPTION>
+                    <OPTION value="no">No</OPTION>
+                </SELECT>
+                &nbsp;
+                <div id="div_signUp_soCal_isCustomer_fixme" class="fixMe">Fix Me!</div>
+
+                <UL>
+                    <LI>
+                        SoCal Gas Number:
+                        &nbsp;
+                        <input id="signUp_soCal_gasNumber" />
+                        &nbsp;
+                        <div id="div_signUp_soCal_gasNumber_fixme" class="fixMe">Fix Me!</div>
+                    </LI>
+                </UL>
+
+                <BR />
+                -->
+
+                What are you most excited about for the offer?
+                &nbsp;
+                <SELECT id="signUp_mostExcited">
+                    <OPTION value="---" selected="selected">---</OPTION>
+                    <OPTION value="steady bills">Having a steady bill</OPTION>
+                    <OPTION value="auto-pay">Auto-payments</OPTION>
+                    <OPTION value="save money">Saving money</OPTION>
+                    <OPTION value="free ts">A free smart thermostat</OPTION>
+                    <OPTION value="other">Other</OPTION>
+                </SELECT>
+                &nbsp;
+                <div id="div_signUp_mostExcited_fixme" class="fixMe">Fix Me!</div>
+
+                <BR /><BR />
+
+                <!-- OPS-15178 CR to removed this
+                Would you recommend this service to someone else?
+                &nbsp;
+                <SELECT id="signUp_recommendToOthers">
+                    <OPTION value="---" selected="selected">---</OPTION>
+                    <OPTION value="yes">Yes</OPTION>
+                    <OPTION value="no">No</OPTION>
+                </SELECT>
+                &nbsp;
+                <div id="div_signUp_recommendToOthers_fixme" class="fixMe">Fix Me!</div>
+
+                <BR /><BR />
+                -->
+
+                <!--
+                Can we reach out to you to offer this to others?
+                &nbsp;
+                <SELECT id="signUp_offerToOthers">
+                    <OPTION value="---" selected="selected">---</OPTION>
+                    <OPTION value="yes">Yes</OPTION>
+                    <OPTION value="no">No</OPTION>
+                </SELECT>
+                &nbsp;
+                <div id="div_signUp_offerToOthers_fixme" class="fixMe">Fix Me!</div>
+
+                <BR /><BR />
+                -->
+
+                <BR /><BR />
+
+                I agree to the
+                <a href="https://www.thesimple.com/legal/flatbill-terms-and-conditions" target="_blank">Terms and Conditions</a>
+                and
+                <a href="https://www.thesimple.com/legal/privacy" target="_blank">Privacy Policy</a>
+                .
+                &nbsp;
+                <input type="checkbox" id="signUp_legal_accepted" name="signUp_legal_accepted" />
+                &nbsp;
+                <div id="div_signUp_legal_accepted_fixme" class="fixMe">Fix Me!</div>
+                <BR /><BR /><BR /><BR />
+
+                <!-- Cancel and Submit buttons -->
+                <div id="divButtonSubmissions_signUp">
+                    <table >
+                        <tr>
+                            <td style="width: 100px;">&nbsp;</td>
+                            <td>
+                                <button id="btn_signup_cancel" onclick="submit_cancel();" class="button w-button">Cancel</button>
+                            </td>
+                            <td style="width: 50px;">&nbsp;</td>
+                            <td>
+                                <button id="btn_signup_enroll" onclick="submit_signUp();" class="button w-button">Enroll</button>
+                            </td>
+                            <td style="width: 100px;">&nbsp;</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <BR /> <BR />
+        </div>
+    </div>
+</div>
+</body>
+</html>
