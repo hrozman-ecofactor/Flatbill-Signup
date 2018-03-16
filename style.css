@@ -238,13 +238,18 @@ input[type=checkbox] {
   text-align: center;
 }
 
-#btn_signup_enroll:disabled {
-    color: #a6a6a6;
-    background-color: #ebebeb;
-}
-
 #btnModalLinkContainer {
   margin-top: 20px;
   padding-left: 10px;
   padding-right: 10px;
+  background-color: #008c99;
+  color: #fff;
 }
+
+#btn_signup_enroll:disabled, #btn_utility_done:disabled, #btnModalLinkContainer.disabled {
+    color: #a6a6a6;
+    background-color: #ebebeb;
+}
+
+
+

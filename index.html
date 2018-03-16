@@ -486,16 +486,17 @@
           }
 
           var done_button = document.getElementById('btn_utility_done');
+          var btnModalContainer = document.getElementById('btnModalLinkContainer');
 
           console.log(validUserData);
 
           if (validUserData) {
-            done_button.classList.remove('disabled-button');
-            done_button.classList.add('dark-button');
+            done_button.classList.remove('disabled');
+            btnModalContainer.classList.remove('disabled');
             done_button.disabled = false;
           } else {
-            done_button.classList.remove('dark-button');
-            done_button.classList.add('disabled-button');
+            done_button.classList.add('disabled');
+            btnModalContainer.classList.add('disabled');
             done_button.disabled = true;
           }
         };
@@ -962,7 +963,7 @@
                     <!--<div style="padding:20px 0px 0px">-->
                         <!--<button id="myBtn" onclick="close_modal();" class="light-button">Link</button>-->
                     <!--</div>-->
-                      <div id="btnModalLinkContainer" class="effield efbuttonfield">
+                      <div id="btnModalLinkContainer" class="effield efbuttonfield disabled">
                         <div>
                             <button type="button" id="btn_utility_done" onclick="close_modal();toggle_enroll_button();" disabled>
                                 <span style="vertical-align: top;">Done</span>
