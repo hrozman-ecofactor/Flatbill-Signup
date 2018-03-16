@@ -439,6 +439,63 @@
             }
         };
 
+        function toggle_utility_done_button() {
+          var validUserData = true;
+          var passwordsMatch = true;
+
+          // signUp_utility_provider
+          results = validateAndGetUserInput('signUp_utility_provider', 'textbox', false);
+          sUtilityProvider = results[0];
+          isValid = results[1];
+          if(isValid == false)
+              validUserData = false;
+
+          // signUp_utility_login_userId
+          results = validateAndGetUserInput('signUp_utility_login_userId', 'textbox', false);
+          sUtilityLoginUserId = results[0];
+          isValid = results[1];
+          if(isValid == false)
+              validUserData = false;
+
+          // signUp_utility_password
+          results = validateAndGetUserInput('signUp_utility_password', 'textbox_password', false);
+          sUtilityPassword = results[0];
+          isValid = results[1];
+          if(isValid == false)
+              validUserData = false;
+
+          // signUp_utility_password_repeat
+          results = validateAndGetUserInput('signUp_utility_password_repeat', 'textbox_password', false);
+          sUtilityPasswordRepeat = results[0];
+          isValid = results[1];
+          if(isValid == false)
+              validUserData = false;
+
+          // Make sure that passwords match
+          if(sUtilityPassword == sUtilityPasswordRepeat) {
+              passwordsMatch = true;
+          } else {
+              if(DEBUG_MODE)
+                  console.log("[DEBUG] Passwords don't match.\nP1:  " + sUtilityPassword + "\nP2:  " + sUtilityPasswordRepeat);
+              validUserData = false;
+              passwordsMatch = false;
+              div_setVisible('div_signUp_utility_password_fixme', true, 'inline');
+              div_setVisible('div_signUp_utility_password_repeat_fixme', true, 'inline');
+          }
+
+          var done_button = document.getElementById('btn_utility_done');
+
+          console.log(validUserData);
+
+          if (validUserData) {
+            done_button.classList.remove('disabled-button');
+            done_button.classList.add('dark-button');
+          } else {
+            done_button.classList.remove('dark-button');
+            done_button.classList.add('disabled-button');
+          }
+        };
+
         function toggle_enroll_button() {
             var validUserData = true;
             var passwordsMatch = true;
@@ -852,7 +909,10 @@
                         </div>
                     </div>
                 </form>
-
+                <div id="section-LinkUtility" style="padding:50px 0px 50px">
+                    <!-- Link to utility account -->
+                    <button id="btnLinkUtilityAccount" onclick="link_utility_account();" class="light-button">Link your utility account</button>
+                </div>
                 <!-- The Modal -->
                 <div id="myModal" class="modal">
 
@@ -867,7 +927,7 @@
                         <label class="effieldlabel" for="signUp_utility_provider">
                               Your Utility:
                         </label>
-                        <select class="rawcontrol" id="signUp_utility_provider" required onchange="toggle_enroll_button();">
+                        <select class="rawcontrol" id="signUp_utility_provider" required onchange="toggle_utility_done_button();">
                             <option value="Southern California Edison">Southern California Edison</option>
                         </select>
                     </div>
@@ -876,32 +936,32 @@
                         <label class="effieldlabel" for="signUp_utility_login_userId">
                             Login UserID/Email:
                         </label>
-                        <input type="text" class="" id="signUp_utility_login_userId" required value="" maxlength="30" onchange="toggle_enroll_button();">
+                        <input type="text" class="" id="signUp_utility_login_userId" required value="" maxlength="30" onchange="toggle_utility_done_button();">
                     </div>
 
                     <div class="effield">
                         <label class="effieldlabel" for="signUp_utility_password">
                             Password:
                         </label>
-                        <input type="password" class="" id="signUp_utility_password" required value="" maxlength="30" onchange="toggle_enroll_button();">
+                        <input type="password" class="" id="signUp_utility_password" required value="" maxlength="30" onchange="toggle_utility_done_button();">
                     </div>
 
                     <div class="effield">
                         <label class="effieldlabel" for="signUp_utility_password_repeat">
                             Password (repeat):
                         </label>
-                        <input type="password" class="" id="signUp_utility_password_repeat" required value="" maxlength="30" onchange="toggle_enroll_button();">
+                        <input type="password" class="" id="signUp_utility_password_repeat" required value="" maxlength="30" onchange="toggle_utility_done_button();">
                     </div>
                     <!--<div style="padding:20px 0px 0px">-->
                         <!--<button id="myBtn" onclick="close_modal();" class="light-button">Link</button>-->
                     <!--</div>-->
                       <div id="btnModalLinkContainer" class="effield efbuttonfield">
                         <div>
-                            <button type="button" class="button-primary" id="myBtn" onclick="close_modal()">
-                                <span style="vertical-align: top;">Link</span>
+                            <button type="button" class="button-primary" id="btn_utility_done" onclick="close_modal()" onchange="toggle_enroll_button();">
+                                <span style="vertical-align: top;">Done</span>
                             </button>
                         </div>
-                    </div>
+                      </div>
                   </div>
 
                 </div>
