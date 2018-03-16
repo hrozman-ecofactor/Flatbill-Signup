@@ -519,7 +519,13 @@
                     <div>
                         In order to process your enrollment, we will need some additional information:
                     </div>
-                    <div class="section-thermostatInfo">
+                    <!-- Circles which indicates the steps of the form: -->
+                    <div class="stepContainer">
+                        <span class="step"></span>
+                        <span class="step"></span>
+                    </div>
+
+                    <div class="section-thermostatInfo tab">
                         <div class="effield">
                             <label class="effieldlabel" for="signUp_total_thermostats_needed">
                                 How many thermostats do you need in your home?<div class="requiredFieldFlag">*</div>
@@ -576,7 +582,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="section-userInfo">
+                    <div class="section-userInfo tab">
                         <div class="effield">
                             <label class="effieldlabel" for="signUp_utility_firstName">
                                 First Name:<div class="requiredFieldFlag">*</div>
@@ -631,8 +637,6 @@
                             </label>
                             <input type="email" class="" id="signUp_utility_email" required value="" maxlength="30">
                         </div>
-                    </div>
-                    <div class="section-userFeedback">
                         <div class="effield">
                             <label class="effieldlabel" for="signUp_mostExcited">
                                 What are you most excited about for the offer?<div class="requiredFieldFlag">*</div>
@@ -647,7 +651,14 @@
                             </select>
                         </div>
                     </div>
-                    <div class="section-TC">
+                    <div>
+                        <div style="overflow:auto;">
+                            <div style="float:right;">
+                                <button type="button" id="btnTogglePage" onclick="nextPrev()">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="section-TC">
                         <div class="effield">
                             <input type="checkbox" class="" id="signUp_legal_accepted" value="on">
                             <label class="effieldlabel efCheckboxStyleLabel" for="signUp_legal_accepted">
@@ -657,7 +668,7 @@
                         </div>
                     </div>
                 </form>
-                <div style="padding:50px 0px 50px">
+                <div id="section-LinkUtility" style="padding:50px 0px 50px">
                     <!-- Link to utility account -->
                     <button id="btnLinkUtilityAccount" onclick="link_utility_account();" class="light-button" disabled>Link your utility account</button>
                 </div>
