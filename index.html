@@ -659,20 +659,11 @@
                             </label>
                         </div>
                     </div>
-                    <!--<div class="section-submit">-->
-                        <!--<div class="effield efbuttonfield">-->
-                            <!--<div>-->
-                                <!--<button type="submit" class="button-primary rawcontrol" id="btnEnrollUser">-->
-                                    <!--<span style="vertical-align: top;">Enroll</span>-->
-                                <!--</button>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <div style="padding:50px 0px 50px">
-                  <!-- Link to utility account -->
-                  <button id="myBtn" onclick="link_utility_account();" class="light-button">Link your utility account</button>
+                </form>
+                <div style="padding:50px 0px 50px">
+                    <!-- Link to utility account -->
+                    <button id="btnLinkUtilityAccount" onclick="link_utility_account();" class="light-button" disabled>Link your utility account</button>
                 </div>
-
                 <!-- The Modal -->
                 <div id="myModal" class="modal">
 
@@ -712,6 +703,7 @@
                             &nbsp;
                             <div id="div_signUp_utility_password_repeat_fixme" class="fixMe">Fix Me!</div>
                         </LI>
+                    </UL>
                         <button id="myBtn" onclick="close_modal();" class="light-button">Done</button>
                   </div>
 
@@ -720,11 +712,10 @@
                 <!-- Cancel and Submit buttons -->
                 <div id="divButtonSubmissions_signUp" align="center">
 
-                  <button id="btn_signup_enroll" onclick="submit_signUp();" class="dark-button" style="font-style:bold">Enroll</button>
-                  <button id="btn_signup_cancel" onclick="submit_cancel();" class="light-button" style="margin-left:50px">Cancel</button>
+                  <button id="btn_signup_enroll" onclick="submit_signUp();" class="dark-button" style="font-style:bold" disabled>Enroll</button>
+                  <button id="btn_signup_cancel" onclick="submit_cancel();" class="light-button" style="margin-left:50px" disabled>Cancel</button>
 
                 </div>
-                </form>
             </div>
         </div>
     </div>
