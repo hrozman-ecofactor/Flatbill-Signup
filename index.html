@@ -659,219 +659,16 @@
                             </label>
                         </div>
                     </div>
-                    <div class="section-submit">
-                        <div class="effield efbuttonfield">
-                            <div>
-                                <button type="submit" class="button-primary rawcontrol" id="btnEnrollUser">
-                                    <span style="vertical-align: top;">Enroll</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-        <div class="w-container">
-
-            <div id="divForm_SignUp" class="divSignup">
-
-
-                Thanks for your interest in signing up for the Simple Flat Bill!
-
-                <BR /><BR />
-
-                Before continuing, please determine if your home wiring is compatible with the Simple thermostat:
-                &nbsp;
-                <UL>
-                    <LI>
-                        <a href=" https://www.thesimple.com/compatibility"
-                           target="_blank">
-                           https://www.thesimple.com/compatibility</a>
-                    </LI>
-                    <LI>
-                        Have you verified that your home wiring is compatible?
-                       &nbsp;
-                        <SELECT id="signUp_compatible_isVerified">
-                            <OPTION value="---" selected="selected">---</OPTION>
-                            <OPTION value="yes">Yes</OPTION>
-                            <OPTION value="no">No</OPTION>
-                        </SELECT>
-                        &nbsp;
-                        <div id="div_signUp_compatible_isVerified_fixme" class="fixMe">Fix Me!</div>
-                    </LI>
-                </UL>
-
-                <BR />
-
-                <HR />
-
-                <BR />
-
-                <I>In order to process your enrollment, we will need some additional information:</I>
-
-                <BR />
-
-                <BR />
-                How many thermostats do you need in your home?
-                &nbsp;
-                <SELECT id="signUp_total_thermostats_needed">
-                    <OPTION value="---" selected="selected">---</OPTION>
-                    <OPTION value="1">1</OPTION>
-                    <OPTION value="2">2</OPTION>
-                    <OPTION value="2">3</OPTION>
-                    <OPTION value="2">4</OPTION>
-                </SELECT>
-                &nbsp;
-                <div id="div_signUp_total_thermostats_needed_fixme" class="fixMe">Fix Me!</div>
-
-                <BR /><BR />
-
-                How many C-Wire Adapters will you need?
-                &nbsp;
-                <SELECT id="signUp_total_cwires_needed">
-                    <OPTION value="---" selected="selected">---</OPTION>
-                    <OPTION value="0">0</OPTION>
-                    <OPTION value="1">1</OPTION>
-                    <OPTION value="2">2</OPTION>
-                    <OPTION value="2">3</OPTION>
-                    <OPTION value="2">4</OPTION>
-                </SELECT>
-                &nbsp;
-                <div id="div_signUp_total_cwires_needed_fixme" class="fixMe">Fix Me!</div>
-
-
-                <BR /><BR />
-
-                What color thermostat?
-                &nbsp;
-                <SELECT id="signUp_thermostat_color">
-                    <OPTION value="---" selected="selected">---</OPTION>
-                    <OPTION value="white">White</OPTION>
-                    <OPTION value="black">Black</OPTION>
-                </SELECT>
-                <div id="div_signUp_thermostat_color_fixme" class="fixMe">Fix Me!</div>
-                &nbsp;
-
-                <BR /><BR />
-
-                Do you have Wi-Fi in your home?
-                &nbsp;
-                <SELECT id="signUp_has_wifi_100_pct">
-                    <OPTION value="---" selected="selected">---</OPTION>
-                    <OPTION value="yes">Yes</OPTION>
-                    <OPTION value="no">No</OPTION>
-                </SELECT>
-                &nbsp;
-                <div id="div_signUp_has_wifi_100_pct_fixme" class="fixMe">Fix Me!</div>
-
-                <BR /><BR />
-
-                Do you have central AC?
-                &nbsp;
-                <SELECT id="signUp_has_central_ac">
-                    <OPTION value="---" selected="selected">---</OPTION>
-                    <OPTION value="yes">Yes</OPTION>
-                    <OPTION value="no">No</OPTION>
-                </SELECT>
-                &nbsp;
-                <div id="div_signUp_has_central_ac_fixme" class="fixMe">Fix Me!</div>
-
-                <BR /><BR />
-
-
-                Confirm the details associated your utility account:
-                &nbsp;
-
-                <BR />
-                <UL>
-                    <LI>
-                        First Name:
-                        &nbsp;
-                        <input type="text" id="signUp_utility_firstName" />
-                        &nbsp;
-                        <div id="div_signUp_utility_firstName_fixme" class="fixMe">Fix Me!</div>
-                    </LI>
-                    <LI>
-                        Last Name:
-                        &nbsp;
-                        <input type="text" id="signUp_utility_lastName" />
-                        &nbsp;
-                        <div id="div_signUp_utility_lastName_fixme" class="fixMe">Fix Me!</div>
-                    </LI>
-                    <LI> Home Location:
-                        <UL>
-                            <LI>
-                                Address 1: &nbsp;<input type="text" id="signUp_utility_location_address1" />
-                                &nbsp;
-                                <div id="div_signUp_utility_location_address1_fixme" class="fixMe">Fix Me!</div>
-                            </LI>
-                            <LI>
-                                Address 2: &nbsp;<input type="text" id="signUp_utility_location_address2" />
-                                &nbsp;
-                                <div id="div_signUp_utility_location_address2_fixme" class="fixMe">Fix Me!</div>
-                            </LI>
-                            <LI>
-                                City: &nbsp;<input type="text" id="signUp_utility_location_city" />
-                                &nbsp;
-                                <div id="div_signUp_utility_location_city_fixme" class="fixMe">Fix Me!</div>
-                            </LI>
-                            <LI>
-                                State: &nbsp;<input type="text" id="signUp_utility_location_state" />
-                                &nbsp;
-                                <div id="div_signUp_utility_location_state_fixme" class="fixMe">Fix Me!</div>
-                            </LI>
-                            <LI>
-                                Zip Code: &nbsp;<input type="text" id="signUp_utility_location_zipcode" />
-                                &nbsp;
-                                <div id="div_signUp_utility_location_zipcode_fixme" class="fixMe">Fix Me!</div>
-                            </LI>
-                        </UL>
-                    </LI>
-                    <LI>
-                        Phone: &nbsp;<input type="text" id="signUp_utility_phone" />
-                        &nbsp;
-                        <div id="div_signUp_utility_phone_fixme" class="fixMe">Fix Me!</div>
-                    </LI>
-                    <LI>
-                        Email: &nbsp;
-                        <input type="text" id="signUp_utility_email" />
-                        &nbsp;
-                        <div id="div_signUp_utility_email_fixme" class="fixMe">Fix Me!</div>
-                    </LI>
-                </UL>
-
-                <BR />
-
-                What are you most excited about for the offer?
-                &nbsp;
-                <SELECT id="signUp_mostExcited">
-                    <OPTION value="---" selected="selected">---</OPTION>
-                    <OPTION value="steady bills">Having a steady bill</OPTION>
-                    <OPTION value="auto-pay">Auto-payments</OPTION>
-                    <OPTION value="save money">Saving money</OPTION>
-                    <OPTION value="free ts">A free smart thermostat</OPTION>
-                    <OPTION value="other">Other</OPTION>
-                </SELECT>
-                &nbsp;
-                <div id="div_signUp_mostExcited_fixme" class="fixMe">Fix Me!</div>
-
-                <BR /><BR />
-
-
-                <BR /><BR />
-
-                I agree to the
-                <a href="https://www.thesimple.com/legal/flatbill-terms-and-conditions" target="_blank">Terms and Conditions</a>
-                and
-                <a href="https://www.thesimple.com/legal/privacy" target="_blank">Privacy Policy</a>
-                .
-                &nbsp;
-                <input type="checkbox" id="signUp_legal_accepted" name="signUp_legal_accepted" />
-                &nbsp;
-                <div id="div_signUp_legal_accepted_fixme" class="fixMe">Fix Me!</div>
-
-                <div style="padding:50px 0px 50px">
+                    <!--<div class="section-submit">-->
+                        <!--<div class="effield efbuttonfield">-->
+                            <!--<div>-->
+                                <!--<button type="submit" class="button-primary rawcontrol" id="btnEnrollUser">-->
+                                    <!--<span style="vertical-align: top;">Enroll</span>-->
+                                <!--</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div style="padding:50px 0px 50px">
                   <!-- Link to utility account -->
                   <button id="myBtn" onclick="link_utility_account();" class="light-button">Link your utility account</button>
                 </div>
@@ -927,9 +724,8 @@
                   <button id="btn_signup_cancel" onclick="submit_cancel();" class="light-button" style="margin-left:50px">Cancel</button>
 
                 </div>
+                </form>
             </div>
-
-            <BR /> <BR />
         </div>
     </div>
 </div>
