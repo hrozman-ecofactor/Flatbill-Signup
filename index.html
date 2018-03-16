@@ -266,16 +266,6 @@
             if(sCentralAc == "yes")
                 bCentralAc = true;
 
-            // signUp_utility_isCustomer
-            //results = validateAndGetUserInput('signUp_utility_isCustomer', 'select', false);
-            //sUtilityIsCustomer = results[0];
-            //isValid = results[1];
-            //if(isValid == false)
-            //    validUserData = false;
-            //bUtilityIsCustomer = false;
-            //if(sUtilityIsCustomer == "yes")
-            //    bUtilityIsCustomer = true;
-
             // signUp_utility_provider
             results = validateAndGetUserInput('signUp_utility_provider', 'textbox', false);
             sUtilityProvider = results[0];
@@ -379,87 +369,12 @@
             if(isValid == false)
                 validUserData = false;
 
-            // OPS-15178 CR to remove this
-            // signUp_sce_levelPayToday_heardOf
-            //results = validateAndGetUserInput('signUp_sce_levelPayToday_heardOf', 'select', false);
-            //sSceLevelPayTodayHeardOf = results[0];
-            //isValid = results[1];
-            //if(isValid == false)
-            //    validUserData = false;
-            //bSceLevelPayTodayHeardOf = false;
-            //if(sSceLevelPayTodayHeardOf == "yes")
-            //    bSceLevelPayTodayHeardOf = true;
-
-            // OPS-15178 CR to remove this
-            // signUp_sce_levelPayToday_isMember
-            //if(bSceLevelPayTodayHeardOf == true) {
-                // Since they heard of Level-Pay Today, we require they answer if they are a member or not
-            //    results = validateAndGetUserInput('signUp_sce_levelPayToday_isMember', 'select', false);
-            //} else {
-                // Allow empty results if they never heard of the level-pay today program
-            //    results = validateAndGetUserInput('signUp_sce_levelPayToday_isMember', 'select', true);
-            //};
-            //sSceLevelPayTodayIsMember = results[0];
-            //isValid = results[1];
-            //if(isValid == false)
-            //    validUserData = false;
-            //bSceLevelPayTodayIsMember = false;
-            //if(sSceLevelPayTodayIsMember == "yes")
-            //    bSceLevelPayTodayIsMember = true;
-
-            // OPS-15178 CR to remove this
-            // signUp_soCal_isCustomer
-            //results = validateAndGetUserInput('signUp_soCal_isCustomer', 'select', false);
-            //sSoCalIsCustomer = results[0];
-            //isValid = results[1];
-            //if(isValid == false)
-            //    validUserData = false;
-            //bSoCalIsCustomer = false;
-            //if(sSoCalIsCustomer == "yes")
-            //    bSoCalIsCustomer = true;
-
-            // OPS-15178 CR to remove this
-            // signUp_soCal_gasNumber
-            //if(bSoCalIsCustomer == true) {
-            //    // Since they are a customer, we require their account number for SoCal Gas
-            //    results = validateAndGetUserInput('signUp_soCal_gasNumber', 'textbox', false);
-            //} else {
-            //    // Allow empty results if they are not a SoCal Gas Customer
-            //    results = validateAndGetUserInput('signUp_soCal_gasNumber', 'textbox', true);
-            //};
-            //sSoCalGasNumber = results[0];
-            //isValid = results[1];
-            //if(isValid == false)
-            //    validUserData = false;
-
             // signUp_mostExcited
             results = validateAndGetUserInput('signUp_mostExcited', 'select', false);
             sMostExcited = results[0];
             isValid = results[1];
             if(isValid == false)
                 validUserData = false;
-            
-            // OPS-15718 CR to removed this
-            // signUp_recommendToOthers
-            //results = validateAndGetUserInput('signUp_recommendToOthers', 'select', false);
-            //sRecommendToOthers = results[0];
-            //isValid = results[1];
-            //if(isValid == false)
-            //    validUserData = false;
-            //bRecommendToOthers = false;
-            //if(sRecommendToOthers == "yes")
-            //    bRecommendToOthers = true;
-
-            // OPS-15178 CR to remove this
-            // signUp_offerToOthers
-            //results = validateAndGetUserInput('signUp_offerToOthers', 'select', false);
-            //sOfferToOthers = results[0];
-            //isValid = results[1];
-            //if(isValid == false)
-            //    validUserData = false;
-            //bOfferToOthers = false;
-            //if(sOfferToOthers == "yes")
-            //    bOfferToOthers = true;
 
             // signUp_legal_accepted
             // We don't need to save any data, but just make sure that they check the checkbox
@@ -492,15 +407,6 @@
                 "utility_email": sUtilityEmail,
                 "mostExcited": sMostExcited
                 };
-                // Unused Values
-                //"offerToOthers": bOfferToOthers,
-                //"sce_isCustomer": sSceIsCustomer,
-                //"sce_levelPayToday_heardOf": bSceLevelPayTodayHeardOf,
-                //"sce_levelPayToday_isMember": sSceLevelPayTodayIsMember,
-                //"socal_isCustomer": bSoCalIsCustomer,
-                //"socal_gasNumber": sSoCalGasNumber,
-                //"recommendToOthers": bRecommendToOthers,
-
             if(DEBUG_MODE) {
                 console.log("[DEBUG] Submission (signup):");
                 console.dir(joDetails);
@@ -606,8 +512,8 @@
                         </label>
                     </div>
                     <div class="effield">
-                            <input type="checkbox" class="" id="emailOption" value="on">
-                            <label class="effieldlabel efCheckboxStyleLabel" for="emailOption">
+                            <input type="checkbox" class="" id="checkVerifyCompatibility" value="on" onclick="verifyCompatible()">
+                            <label class="effieldlabel efCheckboxStyleLabel" for="checkVerifyCompatibility">
                                 I have verified that my home wiring is compatible.<div class="requiredFieldFlag"></div>
                             </label>
                     </div>
@@ -622,8 +528,8 @@
                             <label class="effieldlabel" for="inputNumOfThermostats">
                                 How many thermostats do you need in your home?<div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="inputNumOfThermostats" required>
-                                <option>---</option>
+                            <select class="rawcontrol" id="inputNumOfThermostats" required disabled>
+                                <option value="">---</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -631,11 +537,11 @@
                             </select>
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="inputThermostatColor">
+                            <label class="effieldlabel" for="inputNumOfCWireAdapters">
                                 How many C-Wire Adapters will you need?<div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="inputNumOfCWireAdapters" required>
-                                <option>---</option>
+                            <select class="rawcontrol" id="inputNumOfCWireAdapters" required disabled>
+                                <option value="">---</option>
                                 <option value="0">0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -647,8 +553,8 @@
                             <label class="effieldlabel" for="inputThermostatColor">
                                 What color is your thermostat?<div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="inputThermostatColor" required>
-                                <option>---</option>
+                            <select class="rawcontrol" id="inputThermostatColor" required disabled>
+                                <option value="">---</option>
                                 <option value="white">White</option>
                                 <option value="black">Black</option>
                             </select>
@@ -657,8 +563,8 @@
                             <label class="effieldlabel" for="inputHasWifi">
                                 Do you have Wi-Fi in your home?  <div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="inputHasWifi" required>
-                                <option>---</option>
+                            <select class="rawcontrol" id="inputHasWifi" required disabled>
+                                <option value="">---</option>
                                 <option value="0">Yes</option>
                                 <option value="1">No</option>
                             </select>
@@ -667,8 +573,8 @@
                             <label class="effieldlabel" for="inputHasAC">
                                 Do you have central AC?<div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="inputHasAC" required>
-                                <option>---</option>
+                            <select class="rawcontrol" id="inputHasAC" required disabled>
+                                <option value="">---</option>
                                 <option value="0">Yes</option>
                                 <option value="1">No</option>
                             </select>
@@ -679,55 +585,55 @@
                             <label class="effieldlabel" for="inputFirstName">
                                 First Name:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="inputFirstName" required value="" maxlength="30">
+                            <input type="text" class="" id="inputFirstName" required disabled value="" maxlength="30">
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="inputLastName">
                                 Last Name:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="inputLastName" required value="" maxlength="30">
+                            <input type="text" class="" id="inputLastName" required disabled value="" maxlength="30">
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="inputAddress1">
                                 Address 1:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="inputAddress1" required value="" maxlength="30">
+                            <input type="text" class="" id="inputAddress1" required disabled value="" maxlength="30">
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="inputAddress2">
                                 Address 2:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="inputAddress2" required value="" maxlength="30">
+                            <input type="text" class="" id="inputAddress2" required disabled value="" maxlength="30">
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="inputCity">
                                 City:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="inputCity" required value="" maxlength="30">
+                            <input type="text" class="" id="inputCity" required disabled value="" maxlength="30">
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="inputState">
                                 State:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="inputState" required value="" maxlength="30">
+                            <input type="text" class="" id="inputState" required disabled value="" maxlength="30">
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="inputZip">
                                 Zip Code:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="text" class="" id="inputZip" required value="" maxlength="30">
+                            <input type="text" class="" id="inputZip" required disabled value="" maxlength="30">
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="inputPhone">
                                 Phone:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="tel" class="" id="inputPhone" required value="" maxlength="30">
+                            <input type="tel" class="" id="inputPhone" required disabled value="" maxlength="30">
                         </div>
                         <div class="effield">
                             <label class="effieldlabel" for="inputEmail">
                                 Email:<div class="requiredFieldFlag">*</div>
                             </label>
-                            <input type="email" class="" id="inputEmail" required value="" maxlength="30">
+                            <input type="email" class="" id="inputEmail" required disabled value="" maxlength="30">
                         </div>
                     </div>
                     <div class="section-userFeedback">
@@ -735,8 +641,8 @@
                             <label class="effieldlabel" for="inputUserFeedback">
                                 What are you most excited about for the offer?<div class="requiredFieldFlag">*</div>
                             </label>
-                            <select class="rawcontrol" id="inputUserFeedback" required>
-                                <option>---</option>
+                            <select class="rawcontrol" id="inputUserFeedback" required disabled>
+                                <option value="">---</option>
                                 <option value="1">Having a steady bill</option>
                                 <option value="2">Auto-payments</option>
                                 <option value="3">Saving money</option>
@@ -747,10 +653,19 @@
                     </div>
                     <div class="section-TC">
                         <div class="effield">
-                            <input type="checkbox" class="" id="emailOption" value="on">
-                            <label class="effieldlabel efCheckboxStyleLabel" for="emailOption">
+                            <input type="checkbox" class="" id="checkTC" value="on" disabled>
+                            <label class="effieldlabel efCheckboxStyleLabel" for="checkTC">
                                 I agree to the Terms and Conditions and Privacy Policy .<div class="requiredFieldFlag"></div>
                             </label>
+                        </div>
+                    </div>
+                    <div class="section-submit">
+                        <div class="effield efbuttonfield">
+                            <div>
+                                <button type="submit" class="button-primary rawcontrol" id="btnEnrollUser">
+                                    <span style="vertical-align: top;">Enroll</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -864,19 +779,6 @@
 
                 <BR /><BR />
 
-                <!-- OPS-15178 CR wanted this removed
-                Are you an SCE customer?
-                &nbsp;
-                <SELECT id="signUp_utility_isCustomer">
-                    <OPTION value="---" selected="selected">---</OPTION>
-                    <OPTION value="yes">Yes</OPTION>
-                    <OPTION value="no">No</OPTION>
-                </SELECT>
-                &nbsp;
-                <div id="div_signUp_utility_isCustomer_fixme" class="fixMe">Fix Me!</div>
-
-                <BR /><BR />
-                -->
 
                 Confirm the details associated your utility account:
                 &nbsp;
@@ -941,57 +843,6 @@
 
                 <BR />
 
-                <!-- OPS-15178 CR to removed this
-                Have you heard of Level-Pay Today (offered by SCE)?
-                &nbsp;
-                <SELECT id="signUp_utility_levelPayToday_heardOf">
-                    <OPTION value="---" selected="selected">---</OPTION>
-                    <OPTION value="yes">Yes</OPTION>
-                    <OPTION value="no">No</OPTION>
-                </SELECT>
-                &nbsp;
-                <div id="div_signUp_utility_levelPayToday_heardOf_fixme" class="fixMe">Fix Me!</div>
-                <UL>
-                    <LI>
-                        Are you a member of Level-Pay Today?
-                        &nbsp;
-                        <SELECT id="signUp_utility_levelPayToday_isMember">
-                            <OPTION value="---" selected="selected">---</OPTION>
-                            <OPTION value="yes">Yes</OPTION>
-                            <OPTION value="no">No</OPTION>
-                        </SELECT>
-                        &nbsp;
-                        <div id="div_signUp_utility_levelPayToday_isMember_fixme" class="fixMe">Fix Me!</div>
-                    </LI>
-                </UL>
-                -->
-
-                <!-- <BR /><BR /> -->
-
-                <!-- OPS-15178 CR to removed this
-                Are you a SoCal Gas Customer?
-                &nbsp;
-                <SELECT id="signUp_soCal_isCustomer">
-                    <OPTION value="---" selected="selected">---</OPTION>
-                    <OPTION value="yes">Yes</OPTION>
-                    <OPTION value="no">No</OPTION>
-                </SELECT>
-                &nbsp;
-                <div id="div_signUp_soCal_isCustomer_fixme" class="fixMe">Fix Me!</div>
-
-                <UL>
-                    <LI>
-                        SoCal Gas Number:
-                        &nbsp;
-                        <input id="signUp_soCal_gasNumber" />
-                        &nbsp;
-                        <div id="div_signUp_soCal_gasNumber_fixme" class="fixMe">Fix Me!</div>
-                    </LI>
-                </UL>
-
-                <BR />
-                -->
-
                 What are you most excited about for the offer?
                 &nbsp;
                 <SELECT id="signUp_mostExcited">
@@ -1007,33 +858,6 @@
 
                 <BR /><BR />
 
-                <!-- OPS-15178 CR to removed this
-                Would you recommend this service to someone else?
-                &nbsp;
-                <SELECT id="signUp_recommendToOthers">
-                    <OPTION value="---" selected="selected">---</OPTION>
-                    <OPTION value="yes">Yes</OPTION>
-                    <OPTION value="no">No</OPTION>
-                </SELECT>
-                &nbsp;
-                <div id="div_signUp_recommendToOthers_fixme" class="fixMe">Fix Me!</div>
-
-                <BR /><BR />
-                -->
-
-                <!--
-                Can we reach out to you to offer this to others?
-                &nbsp;
-                <SELECT id="signUp_offerToOthers">
-                    <OPTION value="---" selected="selected">---</OPTION>
-                    <OPTION value="yes">Yes</OPTION>
-                    <OPTION value="no">No</OPTION>
-                </SELECT>
-                &nbsp;
-                <div id="div_signUp_offerToOthers_fixme" class="fixMe">Fix Me!</div>
-
-                <BR /><BR />
-                -->
 
                 <BR /><BR />
 
@@ -1109,5 +933,6 @@
         </div>
     </div>
 </div>
+<script src="index.js"></script>
 </body>
 </html>
