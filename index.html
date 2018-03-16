@@ -437,7 +437,19 @@
             if (event.target == modal) {
                 modal.style.display = "none";
             }
-        }
+        };
+
+        function toggle_enroll_button() {
+            var enroll_button = document.getElementById('btn_signup_enroll');
+            var agree_checkbox = document.getElementById('signUp_legal_accepted');
+            if (agree_checkbox.checked) {
+              enroll_button.classList.remove('disabled-button');
+              enroll_button.classList.add('dark-button');
+            } else {
+              enroll_button.classList.remove('dark-button');
+              enroll_button.classList.add('disabled-button');
+            }
+        };
     </script>
     <style>
         .fixMe {
@@ -660,7 +672,7 @@
                     </div>
                     <div id="section-TC">
                         <div class="effield">
-                            <input type="checkbox" class="" id="signUp_legal_accepted" value="on">
+                            <input type="checkbox" class="" id="signUp_legal_accepted" value="on" onchange="toggle_enroll_button();">
                             <label class="effieldlabel efCheckboxStyleLabel" for="signUp_legal_accepted">
                                 I agree to the <a href="https://www.thesimple.com/legal/flatbill-terms-and-conditions">Terms and Conditions</a>
                                 and <a href="https://www.thesimple.com/legal/privacy">Privacy Policy</a>.
@@ -679,40 +691,40 @@
                   <div class="modal-content">
                     <span class="close" onclick="close_modal();">&times;</span>
                     Confirm the details associated your utility account:
-                    &nbsp;
-                    <BR />
-                    <UL>
-                        <!-- Added in OPS-15718 -->
-                        <LI> Your Utility:
-                            &nbsp;
-                            <select class="rawcontrol" id="signUp_utility_provider" required>
-                                <option>---</option>
-                                <option value="Southern California Edison">Southern California Edison</option>
-                            </select>
-                            <div id="div_signUp_utility_provider_fixme" class="fixMe">Fix Me!</div>
-                        </LI>
-                        <LI>Login UserID/Email:
-                            &nbsp;
-                            <input type="text" id="signUp_utility_login_userId" />
-                            &nbsp;
-                            <div id="div_signUp_utility_login_userId_fixme" class="fixMe">Fix Me!</div>
-                        </LI>
-                        <LI>
-                            Password:
-                            &nbsp;
-                            <input type="password" id="signUp_utility_password" />
-                            &nbsp;
-                            <div id="div_signUp_utility_password_fixme" class="fixMe">Fix Me!</div>
-                        </LI>
-                        <LI>
-                            Password (repeat):
-                            &nbsp;
-                            <input type="password" id="signUp_utility_password_repeat" />
-                            &nbsp;
-                            <div id="div_signUp_utility_password_repeat_fixme" class="fixMe">Fix Me!</div>
-                        </LI>
-                    </UL>
-                        <button id="myBtn" onclick="close_modal();" class="light-button">Done</button>
+
+                    <div class="effield">
+                        <label class="effieldlabel" for="signUp_utility_provider">
+                              Your Utility:<div class="requiredFieldFlag">*</div>
+                        </label>
+                        <select class="rawcontrol" id="signUp_utility_provider" required>
+                            <option value="">---</option>
+                            <option value="Southern California Edison">Southern California Edison</option>
+                        </select>
+                    </div>
+
+                    <div class="effield">
+                        <label class="effieldlabel" for="signUp_utility_login_userId">
+                            Login UserID/Email:<div class="requiredFieldFlag">*</div>
+                        </label>
+                        <input type="text" class="" id="signUp_utility_login_userId" required value="" maxlength="30">
+                    </div>
+
+                    <div class="effield">
+                        <label class="effieldlabel" for="signUp_utility_password">
+                            Password:<div class="requiredFieldFlag">*</div>
+                        </label>
+                        <input type="password" class="" id="signUp_utility_password" required value="" maxlength="30">
+                    </div>
+
+                    <div class="effield">
+                        <label class="effieldlabel" for="signUp_utility_password_repeat">
+                            Password (repeat):<div class="requiredFieldFlag">*</div>
+                        </label>
+                        <input type="password" class="" id="signUp_utility_password_repeat" required value="" maxlength="30">
+                    </div>
+                    <div style="padding:20px 0px 0px">
+                        <button id="myBtn" onclick="close_modal();" class="light-button">Link</button>
+                    </div>
                   </div>
 
                 </div>
@@ -720,7 +732,7 @@
                 <!-- Cancel and Submit buttons -->
                 <div id="divButtonSubmissions_signUp" align="center">
 
-                  <button id="btn_signup_enroll" onclick="submit_signUp();" class="dark-button" style="font-style:bold" disabled>Enroll</button>
+                  <button id="btn_signup_enroll" onclick="submit_signUp();" class="disabled-button" style="font-style:bold" disabled>Enroll</button>
                   <button id="btn_signup_cancel" onclick="submit_cancel();" class="light-button" style="margin-left:50px" disabled>Cancel</button>
 
                 </div>
