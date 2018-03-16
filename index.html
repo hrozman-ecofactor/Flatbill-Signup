@@ -474,13 +474,15 @@
           // Make sure that passwords match
           if(sUtilityPassword == sUtilityPasswordRepeat) {
               passwordsMatch = true;
+              match_text = document.getElementById('do_not_match_label');
+              match_text.innerHTML = '';
           } else {
               if(DEBUG_MODE)
                   console.log("[DEBUG] Passwords don't match.\nP1:  " + sUtilityPassword + "\nP2:  " + sUtilityPasswordRepeat);
               validUserData = false;
               passwordsMatch = false;
-              div_setVisible('div_signUp_utility_password_fixme', true, 'inline');
-              div_setVisible('div_signUp_utility_password_repeat_fixme', true, 'inline');
+              match_text = document.getElementById('do_not_match_label');
+              match_text.innerHTML = '[Passwords do not match]';
           }
 
           var done_button = document.getElementById('btn_utility_done');
@@ -490,9 +492,11 @@
           if (validUserData) {
             done_button.classList.remove('disabled-button');
             done_button.classList.add('dark-button');
+            done_button.disabled = false;
           } else {
             done_button.classList.remove('dark-button');
             done_button.classList.add('disabled-button');
+            done_button.disabled = true;
           }
         };
 
@@ -622,9 +626,11 @@
             if (validUserData) {
               enroll_button.classList.remove('disabled-button');
               enroll_button.classList.add('dark-button');
+              enroll_button.disabled = false;
             } else {
               enroll_button.classList.remove('dark-button');
               enroll_button.classList.add('disabled-button');
+              enroll_button.disabled = true;
             }
         };
 
@@ -918,13 +924,14 @@
                     </div>
 
                     <div class="effield">
-                        <label class="effieldlabel" for="signUp_utility_password_repeat">
+                        <label class="effieldlabel_password" for="signUp_utility_password_repeat">
                             Password (repeat):
                         </label>
-                        <input type="password" class="" id="signUp_utility_password_repeat" required value="" maxlength="30" onchange="toggle_utility_done_button();">
+                        <label id="do_not_match_label" class="effieldlabel_password_match" style="margin-left:2px"></label>
+                        <input type="password" class="" id="signUp_utility_password_repeat" required value="" maxlength="30" onkeyup="toggle_utility_done_button();">
                     </div>
                     <div style="padding:20px 0px 0px">
-                        <button id="btn_utility_done" onclick="close_modal();" class="disabled-button" onchange="toggle_enroll_button();">Done</button>
+                        <button id="btn_utility_done" onclick="close_modal();toggle_enroll_button();" class="disabled-button" disabled>Done</button>
                     </div>
                   </div>
 

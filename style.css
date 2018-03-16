@@ -16,6 +16,19 @@
   display: block;
 }
 
+.effieldlabel_password {
+  margin: 0 -2px 0 0;
+  padding: 0;
+  display: inline-block;
+}
+
+.effieldlabel_password_match {
+  color: red;
+  margin: 0 -2px 0 0;
+  padding: 0;
+  display: inline-block;
+}
+
 .requiredFieldFlag {
   display: inline-block;
   width: .6em;
