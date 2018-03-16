@@ -26,6 +26,14 @@
     display: inline-block;
 }
 
+a {
+    color: #008c99;
+}
+
+a:hover, a:focus {
+    color: #1db5c4;
+}
+
 label {
     display: block;
     letter-spacing: .01rem;
