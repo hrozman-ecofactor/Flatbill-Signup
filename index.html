@@ -437,7 +437,19 @@
             if (event.target == modal) {
                 modal.style.display = "none";
             }
-        }
+        };
+
+        function toggle_enroll_button() {
+            var enroll_button = document.getElementById('btn_signup_enroll');
+            var agree_checkbox = document.getElementById('signUp_legal_accepted');
+            if (agree_checkbox.checked) {
+              enroll_button.classList.remove('disabled-button');
+              enroll_button.classList.add('dark-button');
+            } else {
+              enroll_button.classList.remove('dark-button');
+              enroll_button.classList.add('disabled-button');
+            }
+        };
     </script>
     <style>
         .fixMe {
@@ -649,7 +661,7 @@
                     </div>
                     <div class="section-TC">
                         <div class="effield">
-                            <input type="checkbox" class="" id="signUp_legal_accepted" value="on">
+                            <input type="checkbox" class="" id="signUp_legal_accepted" value="on" onchange="toggle_enroll_button();">
                             <label class="effieldlabel efCheckboxStyleLabel" for="signUp_legal_accepted">
                                 I agree to the <a href="https://www.thesimple.com/legal/flatbill-terms-and-conditions">Terms and Conditions</a>
                                 and <a href="https://www.thesimple.com/legal/privacy">Privacy Policy</a>.
@@ -709,7 +721,7 @@
                 <!-- Cancel and Submit buttons -->
                 <div id="divButtonSubmissions_signUp" align="center">
 
-                  <button id="btn_signup_enroll" onclick="submit_signUp();" class="dark-button" style="font-style:bold" disabled>Enroll</button>
+                  <button id="btn_signup_enroll" onclick="submit_signUp();" class="disabled-button" style="font-style:bold" disabled>Enroll</button>
                   <button id="btn_signup_cancel" onclick="submit_cancel();" class="light-button" style="margin-left:50px" disabled>Cancel</button>
 
                 </div>
