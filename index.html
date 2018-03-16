@@ -461,44 +461,6 @@
         .divSignup {
             padding: 53px;
         }
-        /* The Modal (background) */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        }
-
-        /* Modal Content */
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-
-        /* The Close Button */
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body class="body" onload="init_signUp();">
@@ -908,10 +870,11 @@
                 <input type="checkbox" id="signUp_legal_accepted" name="signUp_legal_accepted" />
                 &nbsp;
                 <div id="div_signUp_legal_accepted_fixme" class="fixMe">Fix Me!</div>
-                <BR /><BR /><BR /><BR />
 
-                <!-- Link to utility account -->
-                <button id="myBtn" onclick="link_utility_account();" class="button w-button">Link your utility account</button>
+                <div style="padding:50px 0px 50px">
+                  <!-- Link to utility account -->
+                  <button id="myBtn" onclick="link_utility_account();" class="light-button">Link your utility account</button>
+                </div>
 
                 <!-- The Modal -->
                 <div id="myModal" class="modal">
@@ -950,26 +913,17 @@
                             &nbsp;
                             <div id="div_signUp_utility_password_repeat_fixme" class="fixMe">Fix Me!</div>
                         </LI>
-                        <button id="myBtn" onclick="close_modal();" class="button w-button">Done</button>
+                        <button id="myBtn" onclick="close_modal();" class="light-button">Done</button>
                   </div>
 
                 </div>
 
                 <!-- Cancel and Submit buttons -->
-                <div id="divButtonSubmissions_signUp">
-                    <table >
-                        <tr>
-                            <td style="width: 100px;">&nbsp;</td>
-                            <td>
-                                <button id="btn_signup_cancel" onclick="submit_cancel();" class="button w-button">Cancel</button>
-                            </td>
-                            <td style="width: 50px;">&nbsp;</td>
-                            <td>
-                                <button id="btn_signup_enroll" onclick="submit_signUp();" class="button w-button">Enroll</button>
-                            </td>
-                            <td style="width: 100px;">&nbsp;</td>
-                        </tr>
-                    </table>
+                <div id="divButtonSubmissions_signUp" align="center">
+
+                  <button id="btn_signup_enroll" onclick="submit_signUp();" class="dark-button" style="font-style:bold">Enroll</button>
+                  <button id="btn_signup_cancel" onclick="submit_cancel();" class="light-button" style="margin-left:50px">Cancel</button>
+
                 </div>
             </div>
 
