@@ -647,7 +647,8 @@
                 numOfCWires.options[numOfCWires.selectedIndex].value !== "" &&
                 colorOfThermostat.options[colorOfThermostat.selectedIndex].value !== "" &&
                 hasWifi.options[hasWifi.selectedIndex].value === "yes" &&
-                hasAC.options[hasAC.selectedIndex].value === "yes") {
+                hasAC.options[hasAC.selectedIndex].value === "yes" &&
+                !numOfThermostats.disabled && !numOfCWires.disabled && !colorOfThermostat.disabled && !hasWifi.disabled && !hasAC.disabled) {
                 document.getElementById("btnNextPage").disabled = false;
                 document.getElementById("btnNextPageContainer").classList.remove("disabled");
             } else {
@@ -849,6 +850,7 @@ input[type=checkbox] {
 
 #section-header label, #section-subheader label {
     font-weight: 400;
+    font-size: 16px;
     text-align: left;
 }
 
@@ -933,6 +935,10 @@ input[type=checkbox] {
     background-color: #ebebeb;
 }
 
+        #section-header .section-header-sub label {
+            font-size: 14px;
+        }
+
 
     </style>
 </head>
@@ -976,16 +982,16 @@ input[type=checkbox] {
         <div class="container">
             <div class="narrowBox">
                 <div id="section-header">
-                    <div>
+                    <div class="section-header-main">
                         <label>Thanks for your interest in signing up for the Simple Flat Bill! </label></div>
-                    <div>
+                    <div class="section-header-sub">
                         <label>
                             Before continuing, please determine if your home wiring is compatible with the Simple thermostat:
                             <a href="https://www.thesimple.com/compatibility">https://www.thesimple.com/compatibility</a>
                         </label>
                     </div>
-                    <div class="effield">
-                            <input type="checkbox" class="" id="signUp_compatible_isVerified" value="on" onclick="verifyCompatible()">
+                    <div class="effield section-header-sub">
+                            <input type="checkbox" class="" id="signUp_compatible_isVerified" value="on" onclick="verifyCompatible();validate_first_page_info();">
                             <label class="effieldlabel efCheckboxStyleLabel" for="signUp_compatible_isVerified">
                                 I have verified that my home wiring is compatible.<div class="requiredFieldFlag"></div>
                             </label>
@@ -1006,7 +1012,7 @@ input[type=checkbox] {
                                 </label>
                             </div>
                             <div class="col-3">
-                                <select class="selectFirstPage" id="signUp_has_wifi_100_pct" required disabled onchange="validate_first_page_info()">
+                                <select class="selectFirstPage" id="signUp_has_wifi_100_pct" required disabled onchange="validateWiFi_AC();validate_first_page_info();">
                                     <option value="">---</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
@@ -1020,7 +1026,7 @@ input[type=checkbox] {
                                 </label>
                             </div>
                             <div class="col-3">
-                                <select class="selectFirstPage" id="signUp_has_central_ac" required disabled onchange="validate_first_page_info()">
+                                <select class="selectFirstPage" id="signUp_has_central_ac" required disabled onchange="validateWiFi_AC();validate_first_page_info();">
                                     <option value="">---</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
@@ -1269,22 +1275,30 @@ input[type=checkbox] {
     }
 }
 
-    function toggleInputEditable(value) {
-        document.getElementById('signUp_has_wifi_100_pct').disabled = value;
-        document.getElementById('signUp_has_central_ac').disabled = value;
-    }
+function toggleInputEditable(value) {
+    document.getElementById('signUp_has_wifi_100_pct').disabled = value;
+    document.getElementById('signUp_has_central_ac').disabled = value;
 
-    function validateWiFi_AC() {
-        if (true) {
-            document.getElementById('signUp_total_thermostats_needed').disabled = true;
-            document.getElementById('signUp_total_cwires_needed').disabled = true;
-            document.getElementById('signUp_thermostat_color').disabled = true;
-        } else {
-            document.getElementById('signUp_total_thermostats_needed').disabled = false;
-            document.getElementById('signUp_total_cwires_needed').disabled = false;
-            document.getElementById('signUp_thermostat_color').disabled = false;
-        }
+    validateWiFi_AC();
+
+}
+
+function validateWiFi_AC() {
+    var hasWifi = document.getElementById('signUp_has_wifi_100_pct');
+    var hasAC = document.getElementById('signUp_has_central_ac');
+
+    if (hasWifi.options[hasWifi.selectedIndex].value === "yes" &&
+    hasAC.options[hasAC.selectedIndex].value === "yes" &&
+    !hasWifi.disabled && !hasAC.disabled) {
+        document.getElementById('signUp_total_thermostats_needed').disabled = false;
+        document.getElementById('signUp_total_cwires_needed').disabled = false;
+        document.getElementById('signUp_thermostat_color').disabled = false;
+    } else {
+        document.getElementById('signUp_total_thermostats_needed').disabled = true;
+        document.getElementById('signUp_total_cwires_needed').disabled = true;
+        document.getElementById('signUp_thermostat_color').disabled = true;
     }
+}
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab
