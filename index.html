@@ -265,7 +265,13 @@
 
             // signUp_utility_provider
             results = validateAndGetUserInput('signUp_utility_provider', 'textbox', false);
-            sUtilityProvider = results[0];
+            utility_provider = document.getElementById('signUp_utility_provider');
+            if (utility_provider == "Other") {
+              sUtilityProvider = document.getElementById('utility_other').value;
+            } else {
+              sUtilityProvider = results[0];
+            }
+
             isValid = results[1];
             if(isValid == false)
                 validUserData = false;
@@ -439,6 +445,25 @@
                 modal.style.display = "none";
             }
         };
+
+        function check_utility() {
+          toggle_utility_done_button();
+
+          var utility_name = document.getElementById('signUp_utility_provider');
+          var utility_div = document.getElementById('utility_div');
+
+          if (utility_name.value === "Other") {
+            var text_field = document.createElement("input");
+            text_field.type = "text";
+            text_field.id = "utility_other";
+            text_field.maxlength = "30";
+            text_field.onchange = "toggle_utility_done_button();";
+            utility_div.appendChild(text_field);
+          } else {
+            var other_textbox = document.getElementById('utility_other');
+            utility_div.removeChild(other_textbox);
+          }
+        }
 
         function toggle_utility_done_button() {
           var validUserData = true;
@@ -1205,12 +1230,14 @@ input[type=checkbox] {
                         Confirm the details associated your utility account:
                     </label>
 
-                    <div class="effield">
+                    <div class="effield" id="utility_div">
                         <label class="effieldlabel" for="signUp_utility_provider">
                               Your Utility:
                         </label>
-                        <select class="rawcontrol" id="signUp_utility_provider" required onchange="toggle_utility_done_button();">
+                        <select class="rawcontrol" id="signUp_utility_provider" required onchange="check_utility();">
                             <option value="Southern California Edison">Southern California Edison</option>
+                            <option value="PG&E">PG&E</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
 
