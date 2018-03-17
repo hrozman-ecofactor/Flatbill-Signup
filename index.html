@@ -1414,6 +1414,7 @@ function toggleInputEditable(value) {
 }
 
 function showErrorMessage(element, msg) {
+        if (element === "signUp_legal_accepted" || element === "btn_utility_done") return;
     var error_message = document.getElementById("error-" + element);
     if (msg === "") {
         error_message.style.display = "none";
