@@ -4,6 +4,7 @@
     <title>Simple - Flat Bill</title>
     <meta content="UKXL8aIXWa3dE8hr36fqVj2HeUjGI2AMbL97uPRYr-E" name="google-site-verification"/>
     <meta content="Webflow" name="generator"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- From original thesimple.com website -->
     <link href="https://daks2k3a4ib2z.cloudfront.net/594acebf03437f1a14504b3f/css/thesimple.webflow.3498c3b89.min.css" rel="stylesheet" type="text/css"/>
     <!-- From FlatBill stage example -->
@@ -722,6 +723,11 @@
                 document.getElementById("btnNextPageContainer").classList.add("disabled");
             }
         }
+
+        function clear_link_account_error() {
+            var lblLinkUtilityError = document.getElementById('div-link-utility-error');
+            lblLinkUtilityError.style.visibility = "hidden";
+        }
     </script>
     <style>
         .fixMe {
@@ -920,8 +926,8 @@ input[type=checkbox] {
 }
 
 #section-header label, #section-subheader label {
-    font-weight: 400;
-    font-size: 16px;
+    font-weight: 600;
+    font-size: 17px;
     text-align: left;
 }
 
@@ -978,7 +984,7 @@ input[type=checkbox] {
   margin-top: 15px;
 }
 
-#btnEnrollContainer, #btnCancelContainer, #btnLinkUtilityContainer, #btnModalLinkContainer {
+#btnEnrollContainer, #btnCancelContainer, #btnLinkUtilityContainer, #btnModalLinkContainer, #btnModalCancelContainer {
   display: inline-block;
 }
 
@@ -1015,6 +1021,16 @@ input[type=checkbox] {
   color: #fff;
 }
 
+#btnModalCancelContainer {
+  color: #000;
+  background-color: #ebebeb;
+}
+
+#btnModalLinkContainer, #btnModalCancelContainer {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 #btn_signup_enroll:disabled, #btn_utility_done:disabled, #btnModalLinkContainer.disabled {
     color: #a6a6a6;
     background-color: #ebebeb;
@@ -1036,6 +1052,26 @@ input[type=checkbox] {
     display: inline;
     margin-bottom: 0;
     margin-left: 15px;
+}
+
+#div-link-utility-label {
+  margin-bottom: 0;
+}
+
+#div-link-utility-error label {
+  color: red;
+}
+
+select {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .narrowBox {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
 }
 
     </style>
@@ -1068,7 +1104,7 @@ input[type=checkbox] {
                         target="_blank" class="nav-link w-nav-link"
                         style="max-width: 940px; white-space: nowrap;">Sign Up</a>
                     <a target="_blank"
-                        href="/flat-bill-faqs"
+                        href="https://www.thesimple.com/flatbill-faqs"
                         class="nav-link w-nav-link"
                         style="max-width: 940px;">FAQs</a><a
                         target="_blank" href="http://www.thesimple.com/legal/flatbill-terms-and-conditions"
@@ -1167,7 +1203,7 @@ input[type=checkbox] {
                         <div class="effield">
                             <div class="col-9">
                                 <label class="effieldlabel" for="signUp_thermostat_color">
-                                    What color would you like your thermostat?
+                                    What color thermostat would you like?
                                 </label>
                             </div>
                             <div class="col-3">
@@ -1283,9 +1319,14 @@ input[type=checkbox] {
                     <div id="section-LinkUtility">
                         <!-- Link to utility account -->
                         <div class="col-6">
-                            <div class="effield">
+                            <div class="effield" id="div-link-utility-label">
                                 <label class="effieldlabel">
                                     Please link your utility account:
+                                </label>
+                            </div>
+                            <div class="effield" id="div-link-utility-error">
+                                <label class="effieldlabel">
+                                    (Account not linked)
                                 </label>
                             </div>
                         </div>
@@ -1320,10 +1361,10 @@ input[type=checkbox] {
 
                   <!-- Modal content -->
                   <div class="modal-content">
-                    <span class="close" onclick="close_modal();">&times;</span>
+                    <!-- <span class="close" onclick="close_modal();">&times;</span>
                     <label class="effieldlabel" style="margin-bottom:20px">
                         Confirm the details associated your utility account:
-                    </label>
+                    </label> -->
 
                     <div class="effield" id="utility_div">
                         <label class="effieldlabel" for="signUp_utility_provider">
@@ -1362,8 +1403,16 @@ input[type=checkbox] {
                     <!--</div>-->
                       <div id="btnModalLinkContainer" class="effield efbuttonfield disabled">
                         <div>
-                            <button type="button" id="btn_utility_done" onclick="close_modal();toggle_enroll_button(this);" disabled>
+                            <button type="button" id="btn_utility_done" onclick="close_modal();toggle_enroll_button(this);clear_link_account_error();" disabled>
                                 <span style="vertical-align: top;">Done</span>
+                            </button>
+
+                        </div>
+                      </div>
+                      <div id="btnModalCancelContainer" class="effield efbuttonfield">
+                        <div>
+                            <button type="button" id="btn_utility_cancel" onclick="close_modal();">
+                                <span style="vertical-align: top;">Cancel</span>
                             </button>
                         </div>
                       </div>
