@@ -266,15 +266,15 @@
             // signUp_utility_provider
             results = validateAndGetUserInput('signUp_utility_provider', 'textbox', false);
             utility_provider = document.getElementById('signUp_utility_provider');
-            if (utility_provider == "Other") {
+            if (utility_provider.value === "Other") {
               sUtilityProvider = document.getElementById('utility_other').value;
+              isValid = results[1] && sUtilityProvider !== "";
             } else {
               sUtilityProvider = results[0];
+              isValid = results[1];
             }
-
-            isValid = results[1];
             if(isValid == false)
-                validUserData = false;
+              validUserData = false;
 
             // signUp_utility_login_userId
             results = validateAndGetUserInput('signUp_utility_login_userId', 'textbox', false);
@@ -447,8 +447,6 @@
         };
 
         function check_utility() {
-          toggle_utility_done_button();
-
           var utility_name = document.getElementById('signUp_utility_provider');
           var utility_div = document.getElementById('utility_div');
 
@@ -457,22 +455,31 @@
             text_field.type = "text";
             text_field.id = "utility_other";
             text_field.maxlength = "30";
-            text_field.onchange = "toggle_utility_done_button();";
+            text_field.setAttribute("onkeyup", "toggle_utility_done_button();");
             utility_div.appendChild(text_field);
           } else {
             var other_textbox = document.getElementById('utility_other');
-            utility_div.removeChild(other_textbox);
+            if (other_textbox)
+              utility_div.removeChild(other_textbox);
           }
-        }
+          toggle_utility_done_button();
+        };
 
         function toggle_utility_done_button() {
+          console.log("FYCs");
           var validUserData = true;
           var passwordsMatch = true;
 
           // signUp_utility_provider
           results = validateAndGetUserInput('signUp_utility_provider', 'textbox', false);
-          sUtilityProvider = results[0];
-          isValid = results[1];
+          utility_provider = document.getElementById('signUp_utility_provider');
+          if (utility_provider.value === "Other") {
+            sUtilityProvider = document.getElementById('utility_other').value;
+            isValid = results[1] && sUtilityProvider !== "";
+          } else {
+            sUtilityProvider = results[0];
+            isValid = results[1];
+          }
           if(isValid == false)
               validUserData = false;
 
@@ -531,8 +538,14 @@
 
             // signUp_utility_provider
             results = validateAndGetUserInput('signUp_utility_provider', 'textbox', false);
-            sUtilityProvider = results[0];
-            isValid = results[1];
+            utility_provider = document.getElementById('signUp_utility_provider');
+            if (utility_provider.value === "Other") {
+              sUtilityProvider = document.getElementById('utility_other').value;
+              isValid = results[1] && sUtilityProvider !== "";
+            } else {
+              sUtilityProvider = results[0];
+              isValid = results[1];
+            }
             if(isValid == false)
                 validUserData = false;
 
