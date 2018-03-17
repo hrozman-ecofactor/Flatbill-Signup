@@ -260,15 +260,15 @@
             // signUp_utility_provider
             results = validateAndGetUserInput('signUp_utility_provider', 'textbox', false);
             utility_provider = document.getElementById('signUp_utility_provider');
-            if (utility_provider == "Other") {
+            if (utility_provider.value === "Other") {
               sUtilityProvider = document.getElementById('utility_other').value;
+              isValid = results[1] && sUtilityProvider !== "";
             } else {
               sUtilityProvider = results[0];
+              isValid = results[1];
             }
-
-            isValid = results[1];
             if(isValid == false)
-                validUserData = false;
+              validUserData = false;
 
             // signUp_utility_login_userId
             results = validateAndGetUserInput('signUp_utility_login_userId', 'textbox', false);
@@ -441,8 +441,6 @@
         };
 
         function check_utility() {
-          toggle_utility_done_button();
-
           var utility_name = document.getElementById('signUp_utility_provider');
           var utility_div = document.getElementById('utility_div');
 
@@ -451,22 +449,31 @@
             text_field.type = "text";
             text_field.id = "utility_other";
             text_field.maxlength = "30";
-            text_field.onchange = "toggle_utility_done_button();";
+            text_field.setAttribute("onkeyup", "toggle_utility_done_button();");
             utility_div.appendChild(text_field);
           } else {
             var other_textbox = document.getElementById('utility_other');
-            utility_div.removeChild(other_textbox);
+            if (other_textbox)
+              utility_div.removeChild(other_textbox);
           }
-        }
+          toggle_utility_done_button();
+        };
 
         function toggle_utility_done_button() {
+          console.log("FYCs");
           var validUserData = true;
           var passwordsMatch = true;
 
           // signUp_utility_provider
           results = validateAndGetUserInput('signUp_utility_provider', 'textbox', false);
-          sUtilityProvider = results[0];
-          isValid = results[1];
+          utility_provider = document.getElementById('signUp_utility_provider');
+          if (utility_provider.value === "Other") {
+            sUtilityProvider = document.getElementById('utility_other').value;
+            isValid = results[1] && sUtilityProvider !== "";
+          } else {
+            sUtilityProvider = results[0];
+            isValid = results[1];
+          }
           if(isValid == false)
               validUserData = false;
 
@@ -529,9 +536,16 @@
 
             // signUp_utility_provider
             results = validateAndGetUserInput('signUp_utility_provider', 'textbox', false);
-            sUtilityProvider = results[0];
-            isValid = results[1];
-            if(isValid === false)
+
+            utility_provider = document.getElementById('signUp_utility_provider');
+            if (utility_provider.value === "Other") {
+              sUtilityProvider = document.getElementById('utility_other').value;
+              isValid = results[1] && sUtilityProvider !== "";
+            } else {
+              sUtilityProvider = results[0];
+              isValid = results[1];
+            }
+            if(isValid == false)
                 validUserData = false;
 
             // signUp_utility_login_userId
@@ -1172,6 +1186,7 @@ input[type=checkbox] {
                             </label>
                             <label id="error-signUp_utility_firstName" class="lbl-error-msg"></label>
                             <input type="text" class="" id="signUp_utility_firstName" required  value="" maxlength="30" onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);">
+
                         </div>
                         <div class="effield">
                             <label class="effieldlabel formLabel" for="signUp_utility_lastName">
@@ -1179,6 +1194,7 @@ input[type=checkbox] {
                             </label>
                             <label id="error-signUp_utility_lastName" class="lbl-error-msg"></label>
                             <input type="text" class="" id="signUp_utility_lastName" required  value="" maxlength="30" onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);">
+
                         </div>
                         <div class="effield">
                             <label class="effieldlabel formLabel" for="signUp_utility_location_address1">
@@ -1186,6 +1202,7 @@ input[type=checkbox] {
                             </label>
                             <label id="error-signUp_utility_location_address1" class="lbl-error-msg"></label>
                             <input type="text" class="" id="signUp_utility_location_address1" required  value="" maxlength="30" onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);">
+
                         </div>
                         <div class="effield">
                             <label class="effieldlabel formLabel" for="signUp_utility_location_address2">
@@ -1200,6 +1217,7 @@ input[type=checkbox] {
                             </label>
                             <label id="error-signUp_utility_location_city" class="lbl-error-msg"></label>
                             <input type="text" class="" id="signUp_utility_location_city" required  value="" maxlength="30" onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);">
+
                         </div>
                         <div class="effield">
                             <label class="effieldlabel formLabel" for="signUp_utility_location_state">
@@ -1221,6 +1239,7 @@ input[type=checkbox] {
                             </label>
                             <label id="error-signUp_utility_phone" class="lbl-error-msg"></label>
                             <input type="tel" class="" id="signUp_utility_phone" required  value="" maxlength="30" onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);">
+
                         </div>
                         <div class="effield">
                             <label class="effieldlabel formLabel" for="signUp_utility_email">
@@ -1228,6 +1247,7 @@ input[type=checkbox] {
                             </label>
                             <label id="error-signUp_utility_email" class="lbl-error-msg"></label>
                             <input type="email" class="" id="signUp_utility_email" required  value="" maxlength="30" onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);">
+
                         </div>
                         <div class="effield">
                             <label class="effieldlabel formLabel" for="signUp_mostExcited">
@@ -1320,14 +1340,14 @@ input[type=checkbox] {
                         <label class="effieldlabel" for="signUp_utility_login_userId">
                             Login UserID/Email:
                         </label>
-                        <input type="text" class="" id="signUp_utility_login_userId" required value="" maxlength="30" onchange="toggle_utility_done_button();">
+                        <input type="text" class="" id="signUp_utility_login_userId" required value="" maxlength="30" onkeyup="toggle_utility_done_button();">
                     </div>
 
                     <div class="effield">
                         <label class="effieldlabel" for="signUp_utility_password">
                             Password:
                         </label>
-                        <input type="password" class="" id="signUp_utility_password" required value="" maxlength="30" onchange="toggle_utility_done_button();">
+                        <input type="password" class="" id="signUp_utility_password" required value="" maxlength="30" onkeyup="toggle_utility_done_button();">
                     </div>
 
                     <div class="effield">
@@ -1374,6 +1394,8 @@ input[type=checkbox] {
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript" intergrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://uploads-ssl.webflow.com/594acebf03437f1a14504b3f/js/webflow.169bea37d.js" type="text/javascript"></script>
 <script>
     function verifyCompatible(){
     if (document.getElementById("signUp_compatible_isVerified").checked === true) {
@@ -1392,7 +1414,6 @@ function toggleInputEditable(value) {
 }
 
 function showErrorMessage(element, msg) {
-        console.log("error-"+ element + ": " + msg);
     var error_message = document.getElementById("error-" + element);
     if (msg === "") {
         error_message.style.display = "none";
