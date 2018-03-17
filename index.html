@@ -216,12 +216,6 @@
                 dHour + ":" + dMin + ":" + dSec + "." + dMilliSec +
                 " GMT+0";
 
-            // signUp_compatible_isVerified
-            results = validateAndGetUserInput('signUp_compatible_isVerified', 'checkbox', false);
-            isValid = results[1];
-            if(isValid == false)
-                validUserData = false;
-
             // signUp_total_cwires_needed
             results = validateAndGetUserInput('signUp_total_cwires_needed', 'select', false);
             sTotalCwiresNeeded = results[0];
@@ -898,6 +892,11 @@ input[type=checkbox] {
   float: left;
 }
 
+.col-6 {
+    width: 50%;
+    float: left;
+}
+
 #btnNextPageContainer {
   margin-top: 15px;
 }
@@ -914,8 +913,17 @@ input[type=checkbox] {
   min-width: 100px;
 }
 
+#btnLinkUtilityContainer {
+    float: right;
+}
+
+
 #section-LinkUtility {
   margin: 20px 0;
+}
+
+#section-TC {
+    padding-top: 15px;
 }
 
 #section-TC .effield {
@@ -1155,11 +1163,7 @@ input[type=checkbox] {
                                 <option value="other">Other</option>
                             </select>
                         </div>
-                        <div class="effield" style="margin:20px 0px 0px 0px">
-                            <label class="effieldlabel">
-                                Please link your utility account:
-                            </label>
-                        </div>
+
 
                     </div>
                     <div id="div-goToNextPage" style="clear: both">
@@ -1178,16 +1182,26 @@ input[type=checkbox] {
                     </div>
                     <div id="section-LinkUtility">
                         <!-- Link to utility account -->
-                        <div id="btnLinkUtilityContainer" class="effield efbuttonfield">
-                            <div>
-                                <button type="button" class="button-primary rawcontrol" id="btnLinkUtilityAccount" onclick="link_utility_account()">
-                                    <span style="vertical-align: top;">Link your utility account</span>
-                                </button>
+                        <div class="col-6">
+                            <div class="effield">
+                                <label class="effieldlabel">
+                                    Please link your utility account:
+                                </label>
                             </div>
                         </div>
+                        <div class="col-6">
+                            <div id="btnLinkUtilityContainer" class="effield efbuttonfield">
+                                <div>
+                                    <button type="button" class="button-primary rawcontrol" id="btnLinkUtilityAccount" onclick="link_utility_account()">
+                                        <span style="vertical-align: top;">Link your account</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                         <!--<button id="btnLinkUtilityAccount" onclick="link_utility_account();" class="light-button" disabled>Link your utility account</button>-->
                     </div>
-                    <div id="section-TC">
+                    <div id="section-TC" style="clear: both;">
                         <div class="effield">
                             <input type="checkbox" class="" id="signUp_legal_accepted"  value="on" onchange="toggle_enroll_button();">
                             <label class="effieldlabel efCheckboxStyleLabel" for="signUp_legal_accepted">
