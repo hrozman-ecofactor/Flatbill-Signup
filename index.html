@@ -460,7 +460,6 @@
         };
 
         function toggle_utility_done_button() {
-          console.log("FYCs");
           var validUserData = true;
           var passwordsMatch = true;
 
@@ -529,7 +528,6 @@
         function toggle_enroll_button(element) {
             var element_id = element.id;
             var error_msg = "";
-            console.log(element_id);
 
             var validUserData = true;
             var passwordsMatch = true;
@@ -642,17 +640,19 @@
             results = validateAndGetUserInput('signUp_utility_location_zipcode', 'textbox', false);
             sUtilityLocationZipcode = results[0];
             isValid = results[1];
-            if(isValid === false || sUtilityLocationZipcode === "") {
+            pattern = new RegExp("^\\d{5}(?:[-\\s]\\d{4})?$");
+            if(isValid === false || sUtilityLocationZipcode === "" || !pattern.test(sUtilityLocationZipcode)) {
                 validUserData = false;
                 if (element_id === "signUp_utility_location_zipcode")
-                    error_msg = "Please enter a zipcode"
+                    error_msg = "Please enter a valid zip"
             }
 
             // signUp_utility_phone
             results = validateAndGetUserInput('signUp_utility_phone', 'textbox', false);
             sUtilityPhone = results[0];
             isValid = results[1];
-            if(isValid === false || sUtilityPhone === "") {
+            pattern = new RegExp("^(?:\\+?1\\s?)?(:?\\([0-9]{3}\\)|[0-9]{3})[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4}$");
+            if(isValid === false || sUtilityPhone === "" || !pattern.test(sUtilityPhone)) {
                 validUserData = false;
                 if (element_id === "signUp_utility_phone")
                     error_msg = "Please enter a phone number"
