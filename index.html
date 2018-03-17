@@ -519,7 +519,11 @@
           }
         };
 
-        function toggle_enroll_button() {
+        function toggle_enroll_button(element) {
+            var element_id = element.id;
+            var error_msg = "";
+            console.log(element_id);
+
             var validUserData = true;
             var passwordsMatch = true;
 
@@ -527,32 +531,32 @@
             results = validateAndGetUserInput('signUp_utility_provider', 'textbox', false);
             sUtilityProvider = results[0];
             isValid = results[1];
-            if(isValid == false)
+            if(isValid === false)
                 validUserData = false;
 
             // signUp_utility_login_userId
             results = validateAndGetUserInput('signUp_utility_login_userId', 'textbox', false);
             sUtilityLoginUserId = results[0];
             isValid = results[1];
-            if(isValid == false)
+            if(isValid === false)
                 validUserData = false;
 
             // signUp_utility_password
             results = validateAndGetUserInput('signUp_utility_password', 'textbox_password', false);
             sUtilityPassword = results[0];
             isValid = results[1];
-            if(isValid == false)
+            if(isValid === false)
                 validUserData = false;
 
             // signUp_utility_password_repeat
             results = validateAndGetUserInput('signUp_utility_password_repeat', 'textbox_password', false);
             sUtilityPasswordRepeat = results[0];
             isValid = results[1];
-            if(isValid == false)
+            if(isValid === false)
                 validUserData = false;
 
             // Make sure that passwords match
-            if(sUtilityPassword == sUtilityPasswordRepeat) {
+            if(sUtilityPassword === sUtilityPasswordRepeat) {
                 passwordsMatch = true;
             } else {
                 if(DEBUG_MODE)
@@ -567,77 +571,104 @@
             results = validateAndGetUserInput('signUp_utility_firstName', 'textbox', false);
             sUtilityFirstName = results[0];
             isValid = results[1];
-            if(isValid == false)
+            if(isValid === false || sUtilityFirstName === "") {
                 validUserData = false;
+                if (element_id === "signUp_utility_firstName")
+                    error_msg = "Please enter a first name"
+            }
 
             // signUp_utility_lastName
             results = validateAndGetUserInput('signUp_utility_lastName', 'textbox', false);
             sUtilityLastName = results[0];
             isValid = results[1];
-            if(isValid == false)
+            if(isValid === false || sUtilityLastName === "") {
                 validUserData = false;
+                if (element_id === "signUp_utility_lastName")
+                    error_msg = "Please enter a last name"
+            }
 
             // signUp_utility_location_address1
             results = validateAndGetUserInput('signUp_utility_location_address1', 'textbox', false);
             sUtilityLocationAddress1 = results[0];
             isValid = results[1];
-            if(isValid == false)
+            if(isValid === false || sUtilityLocationAddress1 === "") {
                 validUserData = false;
+                if (element_id === "signUp_utility_location_address1")
+                    error_msg = "Please enter an address"
+            }
 
             // signUp_utility_location_address2
             results = validateAndGetUserInput('signUp_utility_location_address2', 'textbox', true);
             sUtilityLocationAddress2 = results[0];
             isValid = results[1];
-            if(isValid == false)
+            if(isValid === false)
                 validUserData = false;
 
             // signUp_utility_location_city
             results = validateAndGetUserInput('signUp_utility_location_city', 'textbox', false);
             sUtilityLocationCity = results[0];
             isValid = results[1];
-            if(isValid == false)
+            if(isValid === false || sUtilityLocationCity === "") {
                 validUserData = false;
+                if (element_id === "signUp_utility_location_city")
+                    error_msg = "Please enter a valid city"
+            }
 
             // signUp_utility_location_state
             results = validateAndGetUserInput('signUp_utility_location_state', 'textbox', false);
             sUtilityLocationState = results[0];
             isValid = results[1];
-            if(isValid == false)
+            if(isValid === false) {
                 validUserData = false;
+                if (element_id === "signUp_utility_location_state")
+                    error_msg = "Please select one"
+            }
 
             // signUp_utility_location_zipcode
             results = validateAndGetUserInput('signUp_utility_location_zipcode', 'textbox', false);
             sUtilityLocationZipcode = results[0];
             isValid = results[1];
-            if(isValid == false)
+            if(isValid === false || sUtilityLocationZipcode === "") {
                 validUserData = false;
+                if (element_id === "signUp_utility_location_zipcode")
+                    error_msg = "Please enter a zipcode"
+            }
 
             // signUp_utility_phone
             results = validateAndGetUserInput('signUp_utility_phone', 'textbox', false);
             sUtilityPhone = results[0];
             isValid = results[1];
-            if(isValid == false)
+            if(isValid === false || sUtilityPhone === "") {
                 validUserData = false;
+                if (element_id === "signUp_utility_phone")
+                    error_msg = "Please enter a phone number"
+            }
 
             // signUp_utility_email
             results = validateAndGetUserInput('signUp_utility_email', 'textbox_email', false);
             sUtilityEmail = results[0];
             isValid = results[1];
-            if(isValid == false)
+            if(isValid === false || sUtilityEmail === "") {
                 validUserData = false;
+                if (element_id === "signUp_utility_email")
+                    error_msg = "Please enter a valid email"
+            }
 
             // signUp_mostExcited
             results = validateAndGetUserInput('signUp_mostExcited', 'select', false);
             sMostExcited = results[0];
             isValid = results[1];
-            if(isValid == false)
+            if(isValid === false) {
                 validUserData = false;
+                if (element_id === "signUp_mostExcited")
+                    error_msg = "Please select one"
+            }
 
             // signUp_legal_accepted
             // We don't need to save any data, but just make sure that they check the checkbox
             results = validateAndGetUserInput('signUp_legal_accepted', 'checkbox', false);
             isValid = results[1];
-            if(isValid == false)
+            if(isValid === false)
                 validUserData = false;
 
             var enroll_button = document.getElementById('btn_signup_enroll');
@@ -648,7 +679,9 @@
               btnEnrollContainer.classList.remove('disabled');
 
               enroll_button.disabled = false;
+              showErrorMessage(element_id, "");
             } else {
+                showErrorMessage(element_id, error_msg);
               enroll_button.classList.add('disabled');
               btnEnrollContainer.classList.add('disabled');
               enroll_button.disabled = true;
@@ -711,6 +744,11 @@
   margin: 0 -2px 0 0;
   padding: 0;
   display: block;
+
+}
+
+.effieldlabel.formLabel {
+    float: left;
 }
 
 .effieldlabel_password {
@@ -978,6 +1016,13 @@ input[type=checkbox] {
     cursor: pointer;
 }
 
+.lbl-error-msg {
+    color: red;
+    float: left;
+    display: inline;
+    margin-bottom: 0;
+    margin-left: 15px;
+}
 
     </style>
 </head>
@@ -1122,64 +1167,74 @@ input[type=checkbox] {
                     </div>
                     <div id="section-userInfo" class="tab">
                         <div class="effield">
-                            <label class="effieldlabel" for="signUp_utility_firstName">
+                            <label class="effieldlabel formLabel" for="signUp_utility_firstName">
                                 First Name:
                             </label>
-                            <input type="text" class="" id="signUp_utility_firstName" required  value="" maxlength="30" onchange="toggle_enroll_button();">
+                            <label id="error-signUp_utility_firstName" class="lbl-error-msg"></label>
+                            <input type="text" class="" id="signUp_utility_firstName" required  value="" maxlength="30" onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);">
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="signUp_utility_lastName">
+                            <label class="effieldlabel formLabel" for="signUp_utility_lastName">
                                 Last Name:
                             </label>
-                            <input type="text" class="" id="signUp_utility_lastName" required  value="" maxlength="30" onchange="toggle_enroll_button();">
+                            <label id="error-signUp_utility_lastName" class="lbl-error-msg"></label>
+                            <input type="text" class="" id="signUp_utility_lastName" required  value="" maxlength="30" onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);">
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="signUp_utility_location_address1">
+                            <label class="effieldlabel formLabel" for="signUp_utility_location_address1">
                                 Address 1:
                             </label>
-                            <input type="text" class="" id="signUp_utility_location_address1" required  value="" maxlength="30" onchange="toggle_enroll_button();">
+                            <label id="error-signUp_utility_location_address1" class="lbl-error-msg"></label>
+                            <input type="text" class="" id="signUp_utility_location_address1" required  value="" maxlength="30" onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);">
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="signUp_utility_location_address2">
+                            <label class="effieldlabel formLabel" for="signUp_utility_location_address2">
                                 Address 2:
                             </label>
-                            <input type="text" class="" id="signUp_utility_location_address2" required  value="" maxlength="30" onchange="toggle_enroll_button();">
+                            <label id="error-signUp_utility_location_address2" class="lbl-error-msg"></label>
+                            <input type="text" class="" id="signUp_utility_location_address2" required  value="" maxlength="30" onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);">
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="signUp_utility_location_city">
+                            <label class="effieldlabel formLabel" for="signUp_utility_location_city">
                                 City:
                             </label>
-                            <input type="text" class="" id="signUp_utility_location_city" required  value="" maxlength="30" onchange="toggle_enroll_button();">
+                            <label id="error-signUp_utility_location_city" class="lbl-error-msg"></label>
+                            <input type="text" class="" id="signUp_utility_location_city" required  value="" maxlength="30" onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);">
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="signUp_utility_location_state">
+                            <label class="effieldlabel formLabel" for="signUp_utility_location_state">
                                 State:
                             </label>
-                            <select class="rawcontrol" id="signUp_utility_location_state" required onchange="toggle_enroll_button();"><option value="">---</option><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option><option value="DC">District of Columbia</option></select>
+                            <label id="error-signUp_utility_location_state" class="lbl-error-msg"></label>
+                            <select class="rawcontrol" id="signUp_utility_location_state" required onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);"><option value="">---</option><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option><option value="DC">District of Columbia</option></select>
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="signUp_utility_location_zipcode">
+                            <label class="effieldlabel formLabel" for="signUp_utility_location_zipcode">
                                 Zip Code:
                             </label>
-                            <input type="text" class="" id="signUp_utility_location_zipcode" required  value="" maxlength="30" onchange="toggle_enroll_button();">
+                            <label id="error-signUp_utility_location_zipcode" class="lbl-error-msg"></label>
+                            <input type="text" class="" id="signUp_utility_location_zipcode" required  value="" maxlength="30" onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);">
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="signUp_utility_phone">
+                            <label class="effieldlabel formLabel" for="signUp_utility_phone">
                                 Phone:
                             </label>
-                            <input type="tel" class="" id="signUp_utility_phone" required  value="" maxlength="30" onchange="toggle_enroll_button();">
+                            <label id="error-signUp_utility_phone" class="lbl-error-msg"></label>
+                            <input type="tel" class="" id="signUp_utility_phone" required  value="" maxlength="30" onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);">
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="signUp_utility_email">
+                            <label class="effieldlabel formLabel" for="signUp_utility_email">
                                 Email:
                             </label>
-                            <input type="email" class="" id="signUp_utility_email" required  value="" maxlength="30" onchange="toggle_enroll_button();">
+                            <label id="error-signUp_utility_email" class="lbl-error-msg"></label>
+                            <input type="email" class="" id="signUp_utility_email" required  value="" maxlength="30" onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);">
                         </div>
                         <div class="effield">
-                            <label class="effieldlabel" for="signUp_mostExcited">
+                            <label class="effieldlabel formLabel" for="signUp_mostExcited">
                                 What are you most excited about for the offer?
                             </label>
-                            <select class="rawcontrol" id="signUp_mostExcited"  required onchange="toggle_enroll_button();">
+                            <label id="error-signUp_mostExcited" class="lbl-error-msg"></label>
+                            <select class="rawcontrol" id="signUp_mostExcited"  required onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);">
                                 <option value="">---</option>
                                 <option value="steady bills">Having a steady bill</option>
                                 <option value="auto-pay">Auto-payments</option>
@@ -1228,7 +1283,7 @@ input[type=checkbox] {
                     </div>
                     <div id="section-TC" style="clear: both;">
                         <div class="effield">
-                            <input type="checkbox" class="" id="signUp_legal_accepted"  value="on" onchange="toggle_enroll_button();">
+                            <input type="checkbox" class="" id="signUp_legal_accepted"  value="on" onchange="toggle_enroll_button(this);" onblur="toggle_enroll_button(this);">
                             <label class="effieldlabel efCheckboxStyleLabel" for="signUp_legal_accepted">
                                 I agree to the <a href="https://www.thesimple.com/legal/flatbill-terms-and-conditions">Terms and Conditions</a>
                                 and <a href="https://www.thesimple.com/legal/privacy">Privacy Policy</a>.
@@ -1287,7 +1342,7 @@ input[type=checkbox] {
                     <!--</div>-->
                       <div id="btnModalLinkContainer" class="effield efbuttonfield disabled">
                         <div>
-                            <button type="button" id="btn_utility_done" onclick="close_modal();toggle_enroll_button();" disabled>
+                            <button type="button" id="btn_utility_done" onclick="close_modal();toggle_enroll_button(this);" disabled>
                                 <span style="vertical-align: top;">Done</span>
                             </button>
                         </div>
@@ -1334,6 +1389,17 @@ function toggleInputEditable(value) {
 
     validateWiFi_AC();
 
+}
+
+function showErrorMessage(element, msg) {
+        console.log("error-"+ element + ": " + msg);
+    var error_message = document.getElementById("error-" + element);
+    if (msg === "") {
+        error_message.style.display = "none";
+    } else {
+        error_message.style.display = "inline";
+        error_message.innerHTML = msg;
+    }
 }
 
 function validateWiFi_AC() {
