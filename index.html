@@ -27,7 +27,7 @@
         //var URL_FLAT_BILL_THANKS = "https://thesimple.webflow.io/dummy-flatbill-thank-you"; // Test dummy page
         //var URL_FLAT_BILL_THANKS = "https://thesimple.webflow.io/flatbill-thank-you"; // Stage env
         var URL_FLAT_BILL_THANKS = "https://www.thesimple.com/flat-bill-thank-you"; // Prod env
-        var URL_FLAT_BILL_SIGNUP = "https://flatbill.thesimple.com/pilot/signup";
+        var URL_FLAT_BILL_SIGNUP = "https://flatbill.thesimple.com/site/signup";
         var XHR_TS = new xhrCreateRequest();
 
         function debug_ShowJsonResponse(XhrResponse) {
@@ -117,7 +117,6 @@
         function init_signUp() {
             div_setVisible('divForm_SignUp', true, 'block');
             div_setVisible('div_signUp_compatible_isVerified_fixme', false, 'inline');
-            div_setVisible('div_signUp_total_cwires_needed_fixme', false, 'inline');
             div_setVisible('div_signUp_total_thermostats_needed_fixme', false, 'inline');
             div_setVisible('div_signUp_thermostat_color_fixme', false, 'inline');
             div_setVisible('div_signUp_has_wifi_100_pct_fixme', false, 'inline');
@@ -216,13 +215,6 @@
             sUtcNow = dYear + "-" + dMonth + "-" + dDay + " " +
                 dHour + ":" + dMin + ":" + dSec + "." + dMilliSec +
                 " GMT+0";
-
-            // signUp_total_cwires_needed
-            results = validateAndGetUserInput('signUp_total_cwires_needed', 'select', false);
-            sTotalCwiresNeeded = results[0];
-            isValid = results[1];
-            if(isValid == false)
-                validUserData = false;
 
             // signUp_total_thermostats_needed
             results = validateAndGetUserInput('signUp_total_thermostats_needed', 'select', false);
@@ -387,7 +379,6 @@
                 "submissionType": FORM_TYPE_SIGNUP,
 //                "compatible_isVerified": bCompatibleIsVerified,
                 "total_thermostats_needed": sTotalThermostatsNeeded,
-                "total_cwires_needed": sTotalCwiresNeeded,
                 "thermostat_color": sThermostatColor,
                 "hasWifiConnectivity": bWifiConnectivity,
                 "hasCentralAc": bCentralAc,
@@ -705,17 +696,15 @@
 
         function validate_first_page_info() {
             var numOfThermostats = document.getElementById('signUp_total_thermostats_needed');
-            var numOfCWires = document.getElementById('signUp_total_cwires_needed');
             var colorOfThermostat = document.getElementById('signUp_thermostat_color');
             var hasWifi = document.getElementById('signUp_has_wifi_100_pct');
             var hasAC = document.getElementById('signUp_has_central_ac');
 
             if (numOfThermostats.options[numOfThermostats.selectedIndex].value !== "" &&
-                numOfCWires.options[numOfCWires.selectedIndex].value !== "" &&
                 colorOfThermostat.options[colorOfThermostat.selectedIndex].value !== "" &&
                 hasWifi.options[hasWifi.selectedIndex].value === "yes" &&
                 hasAC.options[hasAC.selectedIndex].value === "yes" &&
-                !numOfThermostats.disabled && !numOfCWires.disabled && !colorOfThermostat.disabled && !hasWifi.disabled && !hasAC.disabled) {
+                !numOfThermostats.disabled && !colorOfThermostat.disabled && !hasWifi.disabled && !hasAC.disabled) {
                 document.getElementById("btnNextPage").disabled = false;
                 document.getElementById("btnNextPageContainer").classList.remove("disabled");
             } else {
@@ -1107,7 +1096,7 @@ select {
                     <a href="https://www.thesimple.com/flatbill"
                         class="nav-link w-nav-link"
                         style="max-width: 940px;">Home</a>
-                    <a href="https://flatbill.thesimple.com/pilot/signup"
+                    <a href="https://flatbill.thesimple.com/site/signup"
                         target="_blank" class="nav-link w-nav-link"
                         style="max-width: 940px; white-space: nowrap;">Sign Up</a>
                     <a target="_blank"
@@ -1131,12 +1120,6 @@ select {
                             <a href="https://www.thesimple.com/compatibility" target="_blank">https://www.thesimple.com/compatibility</a>
                         </label>
                     </div>
-                    <div class="effield section-header-sub">
-                            <input type="checkbox" class="" id="signUp_compatible_isVerified" value="on" onclick="verifyCompatible();validate_first_page_info();">
-                            <label class="effieldlabel efCheckboxStyleLabel" for="signUp_compatible_isVerified">
-                                I have verified that my home wiring is compatible.<div class="requiredFieldFlag"></div>
-                            </label>
-                    </div>
                 </div>
                 <form>
                     <div id="section-subheader">
@@ -1153,7 +1136,7 @@ select {
                                 </label>
                             </div>
                             <div class="col-3">
-                                <select class="selectFirstPage" id="signUp_has_wifi_100_pct" required disabled onchange="validateWiFi_AC();validate_first_page_info();">
+                                <select class="selectFirstPage" id="signUp_has_wifi_100_pct" required onchange="validateWiFi_AC();validate_first_page_info();">
                                     <option value="">---</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
@@ -1167,7 +1150,7 @@ select {
                                 </label>
                             </div>
                             <div class="col-3">
-                                <select class="selectFirstPage" id="signUp_has_central_ac" required disabled onchange="validateWiFi_AC();validate_first_page_info();">
+                                <select class="selectFirstPage" id="signUp_has_central_ac" required onchange="validateWiFi_AC();validate_first_page_info();">
                                     <option value="">---</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
@@ -1182,23 +1165,6 @@ select {
                             </div>
                             <div class="col-3">
                                 <select class="selectFirstPage" id="signUp_total_thermostats_needed" required disabled onchange="validate_first_page_info()">
-                                    <option value="">---</option>
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="effield">
-                            <div class="col-9">
-                                <label class="effieldlabel" for="signUp_total_cwires_needed">
-                                    How many C-Wire Adapters will you need?
-                                </label>
-                            </div>
-                            <div class="col-3">
-                                <select class="selectFirstPage" id="signUp_total_cwires_needed" required disabled onchange="validate_first_page_info()">
                                     <option value="">---</option>
                                     <option value="0">0</option>
                                     <option value="1">1</option>
@@ -1454,22 +1420,6 @@ select {
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript" intergrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://uploads-ssl.webflow.com/594acebf03437f1a14504b3f/js/webflow.169bea37d.js" type="text/javascript"></script>
 <script>
-    function verifyCompatible(){
-    if (document.getElementById("signUp_compatible_isVerified").checked === true) {
-        toggleInputEditable(false);
-    } else {
-        toggleInputEditable(true);
-    }
-}
-
-function toggleInputEditable(value) {
-    document.getElementById('signUp_has_wifi_100_pct').disabled = value;
-    document.getElementById('signUp_has_central_ac').disabled = value;
-
-    validateWiFi_AC();
-
-}
-
 function showErrorMessage(element, msg) {
         if (element === "signUp_legal_accepted" || element === "btn_utility_done") return;
     var error_message = document.getElementById("error-" + element);
@@ -1489,11 +1439,9 @@ function validateWiFi_AC() {
     hasAC.options[hasAC.selectedIndex].value === "yes" &&
     !hasWifi.disabled && !hasAC.disabled) {
         document.getElementById('signUp_total_thermostats_needed').disabled = false;
-        document.getElementById('signUp_total_cwires_needed').disabled = false;
         document.getElementById('signUp_thermostat_color').disabled = false;
     } else {
         document.getElementById('signUp_total_thermostats_needed').disabled = true;
-        document.getElementById('signUp_total_cwires_needed').disabled = true;
         document.getElementById('signUp_thermostat_color').disabled = true;
     }
 }
