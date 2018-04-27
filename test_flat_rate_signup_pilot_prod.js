@@ -5,10 +5,10 @@ const puppeteer = require('puppeteer');
 
 (async () => {
     //const S_compatibleIsVerified = '#signUp_compatible_isVerified';
-    const S_hasWifi = '#signUp_has_wifi_100_pct';
-    const S_hasCentralAc = '#signUp_has_central_ac';
+    //const S_hasWifi = '#signUp_has_wifi_100_pct';
+    //const S_hasCentralAc = '#signUp_has_central_ac';
     const S_totalThermostatsNeeded = '#signUp_total_thermostats_needed';
-    const S_totalCwiresNeeded = '#signUp_total_cwires_needed';
+    //const S_totalCwiresNeeded = '#signUp_total_cwires_needed';
     const S_thermostatColor = '#signUp_thermostat_color';
     const S_btnNextPage = '#btnNextPage';
     const S_utilityFirstName = '#signUp_utility_firstName';
@@ -43,10 +43,12 @@ const puppeteer = require('puppeteer');
     //await page.click(S_totalCwiresNeeded);
     //await page.keyboard.type('2');
     */
-    await page.click(S_hasWifi);
-    await page.keyboard.type('Yes'); // If not yes, the button won't enable
-    await page.click(S_hasCentralAc);
-    await page.keyboard.type('Yes'); // If not yes, the button won't enable
+    /* This was removed 4/27/2018
+    // await page.click(S_hasWifi);
+    // await page.keyboard.type('Yes'); // If not yes, the button won't enable
+    // await page.click(S_hasCentralAc);
+    // await page.keyboard.type('Yes'); // If not yes, the button won't enable
+    */
     await page.click(S_totalThermostatsNeeded);
     await page.keyboard.type('2');
     await page.click(S_thermostatColor);

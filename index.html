@@ -231,26 +231,6 @@
             if(isValid == false)
                 validUserData = false;
 
-            // signUp_has_wifi_100_pct
-            results = validateAndGetUserInput('signUp_has_wifi_100_pct', 'select', false);
-            sWifiConnectivity = results[0];
-            isValid = results[1];
-            if(isValid == false)
-                validUserData = false;
-            bWifiConnectivity = false;
-            if(sWifiConnectivity == "yes")
-                bWifiConnectivity = true;
-
-            // signUp_has_central_ac
-            results = validateAndGetUserInput('signUp_has_central_ac', 'select', false);
-            sCentralAc = results[0];
-            isValid = results[1];
-            if(isValid == false)
-                validUserData = false;
-            bCentralAc = false;
-            if(sCentralAc == "yes")
-                bCentralAc = true;
-
             // signUp_utility_provider
             results = validateAndGetUserInput('signUp_utility_provider', 'textbox', false);
             utility_provider = document.getElementById('signUp_utility_provider');
@@ -381,8 +361,6 @@
 //                "compatible_isVerified": bCompatibleIsVerified,
                 "total_thermostats_needed": sTotalThermostatsNeeded,
                 "thermostat_color": sThermostatColor,
-                "hasWifiConnectivity": bWifiConnectivity,
-                "hasCentralAc": bCentralAc,
                 "utility_provider": sUtilityProvider,
                 "utility_login_userId": sUtilityLoginUserId,
                 "utility_password": sUtilityPassword,
@@ -698,14 +676,10 @@
         function validate_first_page_info() {
             var numOfThermostats = document.getElementById('signUp_total_thermostats_needed');
             var colorOfThermostat = document.getElementById('signUp_thermostat_color');
-            var hasWifi = document.getElementById('signUp_has_wifi_100_pct');
-            var hasAC = document.getElementById('signUp_has_central_ac');
 
             if (numOfThermostats.options[numOfThermostats.selectedIndex].value !== "" &&
                 colorOfThermostat.options[colorOfThermostat.selectedIndex].value !== "" &&
-                hasWifi.options[hasWifi.selectedIndex].value === "yes" &&
-                hasAC.options[hasAC.selectedIndex].value === "yes" &&
-                !numOfThermostats.disabled && !colorOfThermostat.disabled && !hasWifi.disabled && !hasAC.disabled) {
+                !numOfThermostats.disabled && !colorOfThermostat.disabled) {
                 document.getElementById("btnNextPage").disabled = false;
                 document.getElementById("btnNextPageContainer").classList.remove("disabled");
             } else {
@@ -915,17 +889,18 @@ input[type=checkbox] {
   box-shadow: 0 0 0 0 #bbb;
 }
 
-#section-header label, #section-subheader label {
+#section-header label  {
     font-weight: 600;
     font-size: 17px;
     text-align: left;
 }
 
-#section-header {
-  border-bottom: solid #5F5F5F;
-  border-width: 1px;
-
+#section-subheader label {
+    font-weight: 400;
+    font-size: 16px;
+    text-align: left;
 }
+
 
 #section-subheader {
   margin: 20px 0;
@@ -1114,50 +1089,14 @@ select {
             <div class="narrowBox">
                 <div id="section-header">
                     <div class="section-header-main">
-                        <label>Thanks for your interest in signing up for the Simple Flat Bill! </label></div>
-                    <div class="section-header-sub">
-                        <label>
-                            Before continuing, please determine if your home wiring is compatible with the Simple thermostat:
-                            <a href="https://www.thesimple.com/compatibility" target="_blank">https://www.thesimple.com/compatibility</a>
-                        </label>
+                        <label>Thanks for your interest in Simple Flat Bill!</label>
                     </div>
                 </div>
                 <form>
                     <div id="section-subheader">
-                        <label class="effieldlabel">
-                            The Flat Bill plan only works for homes with Wi-Fi and central AC.
-                        </label>
+                        <label class="effieldlabel">Flat Bill requires that you have Wi-Fi and central AC.</label>
                     </div>
-
                     <div id="section-thermostatInfo" class="tab">
-                        <div class="effield">
-                            <div class="col-9">
-                                <label class="effieldlabel" for="signUp_has_wifi_100_pct">
-                                    Do you have Wi-Fi in your home?
-                                </label>
-                            </div>
-                            <div class="col-3">
-                                <select class="selectFirstPage" id="signUp_has_wifi_100_pct" required onchange="validateWiFi_AC();validate_first_page_info();">
-                                    <option value="">---</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="effield">
-                            <div class="col-9">
-                                <label class="effieldlabel" for="signUp_has_central_ac">
-                                    Do you have central AC?
-                                </label>
-                            </div>
-                            <div class="col-3">
-                                <select class="selectFirstPage" id="signUp_has_central_ac" required onchange="validateWiFi_AC();validate_first_page_info();">
-                                    <option value="">---</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="effield">
                             <div class="col-9">
                                 <label class="effieldlabel" for="signUp_total_thermostats_needed">
@@ -1165,7 +1104,7 @@ select {
                                 </label>
                             </div>
                             <div class="col-3">
-                                <select class="selectFirstPage" id="signUp_total_thermostats_needed" required disabled onchange="validate_first_page_info()">
+                                <select class="selectFirstPage" id="signUp_total_thermostats_needed" required onchange="validate_first_page_info()">
                                     <option value="">---</option>
                                     <option value="0">0</option>
                                     <option value="1">1</option>
@@ -1182,7 +1121,7 @@ select {
                                 </label>
                             </div>
                             <div class="col-3">
-                                <select class="selectFirstPage" id="signUp_thermostat_color" required disabled onchange="validate_first_page_info()">
+                                <select class="selectFirstPage" id="signUp_thermostat_color" required onchange="validate_first_page_info()">
                                     <option value="">---</option>
                                     <option value="white">White</option>
                                     <option value="black">Black</option>
@@ -1429,21 +1368,6 @@ function showErrorMessage(element, msg) {
     } else {
         error_message.style.display = "inline";
         error_message.innerHTML = msg;
-    }
-}
-
-function validateWiFi_AC() {
-    var hasWifi = document.getElementById('signUp_has_wifi_100_pct');
-    var hasAC = document.getElementById('signUp_has_central_ac');
-
-    if (hasWifi.options[hasWifi.selectedIndex].value === "yes" &&
-    hasAC.options[hasAC.selectedIndex].value === "yes" &&
-    !hasWifi.disabled && !hasAC.disabled) {
-        document.getElementById('signUp_total_thermostats_needed').disabled = false;
-        document.getElementById('signUp_thermostat_color').disabled = false;
-    } else {
-        document.getElementById('signUp_total_thermostats_needed').disabled = true;
-        document.getElementById('signUp_thermostat_color').disabled = true;
     }
 }
 
