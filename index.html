@@ -496,6 +496,27 @@
           }
         };
 
+        function toggle_link_utility_button(element) {
+            var isAccountAvailable = !document.getElementById("signUp_no_utility").checked;
+            console.log(isAccountAvailable);
+
+            var btnLinkUtilityAccount = document.getElementById('btnLinkUtilityAccount');
+            var btnLinkUtilityContainer = document.getElementById('btnLinkUtilityContainer');
+
+            if (isAccountAvailable) {
+                btnLinkUtilityContainer.classList.remove('disabled');
+                btnLinkUtilityAccount.classList.remove('disabled');
+                btnLinkUtilityAccount.disabled = false;
+                console.log("ACC AVAIL");
+            } else {
+                btnLinkUtilityContainer.classList.add('disabled');
+                btnLinkUtilityAccount.classList.add('disabled');
+                btnLinkUtilityAccount.disabled = true;
+                console.log("ACC NOT AVAIL");
+            }
+            toggle_enroll_button(element);
+        }
+
         function toggle_enroll_button(element) {
             var element_id = element.id;
             var error_msg = "";
@@ -503,52 +524,65 @@
             var validUserData = true;
             var passwordsMatch = true;
 
+            //signUp_no_utility
+            isAccountAvailable = !validateAndGetUserInput('signUp_no_utility', 'checkbox', true)[0];
+
             // signUp_utility_provider
             results = validateAndGetUserInput('signUp_utility_provider', 'textbox', false);
 
-            utility_provider = document.getElementById('signUp_utility_provider');
-            if (utility_provider.value === "Other") {
-              sUtilityProvider = document.getElementById('utility_other').value;
-              isValid = results[1] && sUtilityProvider !== "";
+            if (isAccountAvailable) {
+                utility_provider = document.getElementById('signUp_utility_provider');
+                if (utility_provider.value === "Other") {
+                    sUtilityProvider = document.getElementById('utility_other').value;
+                    isValid = results[1] && sUtilityProvider !== "";
+                } else {
+                    sUtilityProvider = results[0];
+                    isValid = results[1];
+                }
+                if (isValid === false)
+                    validUserData = false;
+
+                // signUp_utility_login_userId
+                results = validateAndGetUserInput('signUp_utility_login_userId', 'textbox', false);
+                sUtilityLoginUserId = results[0];
+                isValid = results[1];
+                if (isValid === false)
+                    validUserData = false;
+
+                // signUp_utility_password
+                results = validateAndGetUserInput('signUp_utility_password', 'textbox_password', false);
+                sUtilityPassword = results[0];
+                isValid = results[1];
+                if (isValid === false)
+                    validUserData = false;
+
+                // signUp_utility_password_repeat
+                results = validateAndGetUserInput('signUp_utility_password_repeat', 'textbox_password', false);
+                sUtilityPasswordRepeat = results[0];
+                isValid = results[1];
+                if (isValid === false)
+                    validUserData = false;
+
+                // Make sure that passwords match
+                if (sUtilityPassword === sUtilityPasswordRepeat) {
+                    passwordsMatch = true;
+                } else {
+                    if (DEBUG_MODE)
+                        console.log("[DEBUG] Passwords don't match.\nP1:  " + sUtilityPassword + "\nP2:  " + sUtilityPasswordRepeat);
+                    validUserData = false;
+                    passwordsMatch = false;
+                    div_setVisible('div_signUp_utility_password_fixme', true, 'inline');
+                    div_setVisible('div_signUp_utility_password_repeat_fixme', true, 'inline');
+                }
             } else {
-              sUtilityProvider = results[0];
-              isValid = results[1];
+                validUserData = true;
+                sUtilityProvider = sUtilityLoginUserId = sUtilityPassword = sUtilityPasswordRepeat = "Utility information not provided.";
+
+                btnLinkUtilityContainer.classList.remove('disabled');
+                btnLinkUtilityAccount.classList.remove('disabled');
+                btnLinkUtilityAccount.disabled = false;
             }
-            if(isValid == false)
-                validUserData = false;
-
-            // signUp_utility_login_userId
-            results = validateAndGetUserInput('signUp_utility_login_userId', 'textbox', false);
-            sUtilityLoginUserId = results[0];
-            isValid = results[1];
-            if(isValid === false)
-                validUserData = false;
-
-            // signUp_utility_password
-            results = validateAndGetUserInput('signUp_utility_password', 'textbox_password', false);
-            sUtilityPassword = results[0];
-            isValid = results[1];
-            if(isValid === false)
-                validUserData = false;
-
-            // signUp_utility_password_repeat
-            results = validateAndGetUserInput('signUp_utility_password_repeat', 'textbox_password', false);
-            sUtilityPasswordRepeat = results[0];
-            isValid = results[1];
-            if(isValid === false)
-                validUserData = false;
-
-            // Make sure that passwords match
-            if(sUtilityPassword === sUtilityPasswordRepeat) {
-                passwordsMatch = true;
-            } else {
-                if(DEBUG_MODE)
-                    console.log("[DEBUG] Passwords don't match.\nP1:  " + sUtilityPassword + "\nP2:  " + sUtilityPasswordRepeat);
-                validUserData = false;
-                passwordsMatch = false;
-                div_setVisible('div_signUp_utility_password_fixme', true, 'inline');
-                div_setVisible('div_signUp_utility_password_repeat_fixme', true, 'inline');
-            }
+            console.log(sUtilityLoginUserId + " - " + sUtilityProvider + " - " + sUtilityPassword + " - " + sUtilityPasswordRepeat);
 
             // signUp_utility_firstName
             results = validateAndGetUserInput('signUp_utility_firstName', 'textbox', false);
@@ -935,6 +969,16 @@ input[type=checkbox] {
   float: left;
 }
 
+.col-2 {
+    width: 8%;
+    float: left;
+}
+
+.col-10 {
+    width: 92%;
+    float: left;
+}
+
 .col-3 {
   width: 25%;
   float: left;
@@ -996,7 +1040,7 @@ input[type=checkbox] {
   margin-right: 5px;
 }
 
-#btn_signup_enroll:disabled, #btn_utility_done:disabled, #btnModalLinkContainer.disabled {
+#btn_signup_enroll:disabled, #btn_utility_done:disabled, #btnModalLinkContainer.disabled, #btnLinkUtilityAccount.disabled {
     color: #a6a6a6;
     background-color: #ebebeb;
 }
@@ -1025,6 +1069,15 @@ input[type=checkbox] {
 
 #div-link-utility-error label {
   color: red;
+}
+
+.row {
+    display: inline-block;
+}
+
+#checkNoUtility input[type=checkbox] {
+    margin-right: 5px;
+    margin-bottom: 0;
 }
 
 select {
@@ -1094,7 +1147,14 @@ select {
                 </div>
                 <form>
                     <div id="section-subheader">
-                        <label class="effieldlabel">Flat Bill requires that you have Wi-Fi and central AC.</label>
+                        <label class="effieldlabel">With Simple Flat Bill, we deal with your utility so you don't have to.
+                            We monitor your usage through your FREE smart thermostat, our energy intelligence technology, and
+                            your utility's reporting. Flat Bill also requires that you have Wi-Fi and central AC.
+                            <p></p>
+                            To make this work successfully, we need to securely connect your Simple account to your utility account.
+                            <p></p>
+                            Let's start with your FREE Energy Star thermostat.
+                        </label>
                     </div>
                     <div id="section-thermostatInfo" class="tab">
                         <div class="effield">
@@ -1245,15 +1305,28 @@ select {
                             </div>
                         </div>
                         <div class="col-6">
-                            <div id="btnLinkUtilityContainer" class="effield efbuttonfield">
+                            <div class="row">
+                                <div id="btnLinkUtilityContainer" class="effield efbuttonfield">
                                 <div>
                                     <button type="button" class="button-primary rawcontrol" id="btnLinkUtilityAccount" onclick="link_utility_account()">
                                         <span style="vertical-align: top;">Link your account</span>
                                     </button>
                                 </div>
                             </div>
+                            </div>
+                            <div class="row">
+                                <div id="checkNoUtility" class="effield">
+                                    <div class="col-2">
+                                        <input type="checkbox" id="signUp_no_utility"  value="on" onchange="toggle_link_utility_button(this);" onblur="toggle_link_utility_button(this);">
+                                    </div>
+                                    <div class="col-10">
+                                        <label class="effieldlabel efCheckboxStyleLabel" for="signUp_no_utility">
+                                            I don't have an online utility account, or do not know my utility account login right now.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
                         <!--<button id="btnLinkUtilityAccount" onclick="link_utility_account();" class="light-button" disabled>Link your utility account</button>-->
                     </div>
                     <div id="section-TC" style="clear: both;">
@@ -1339,7 +1412,7 @@ select {
                     <div id="btnEnrollContainer" class="effield efbuttonfield disabled">
                         <div>
                             <button type="button" class="button-primary rawcontrol disabled" id="btn_signup_enroll" disabled onclick="submit_signUp()">
-                                <span style="vertical-align: top;">Enroll</span>
+                                <span style="vertical-align: top;">Submit</span>
                             </button>
                         </div>
                     </div>
@@ -1387,7 +1460,7 @@ function showTab(n) {
   if (n == (x.length - 1)) {
     document.getElementById("btnNextPage").style.display = "none";
     document.getElementById("section-subheader").style.display = "none";
-    document.getElementById("section-header").innerHTML = "<label>Fill in the details associated with your utility account:</label>";
+    document.getElementById("section-header").innerHTML = "<label>Enter your basic information so we can send you a customized offer:</label>";
     document.getElementById("section-header").style.borderBottom = "none";
     document.getElementById("section-header").style.marginBottom = "20px";
 
