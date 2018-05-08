@@ -17,7 +17,7 @@
     <link href="https://daks2k3a4ib2z.cloudfront.net/594acebf03437f1a14504b3f/59966e1dab717100012b7956_simple-logo-link.png" rel="apple-touch-icon"/>
     <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', 'UA-107304173-1', 'auto');ga('send', 'pageview');</script>
     <script>
-        var DEBUG_MODE = false;
+        var DEBUG_MODE = true;
         //DEBUG_MODE = true; // Allow local debugging
 
         var FORM_TYPE_SIGNUP = "signUp";
@@ -217,6 +217,9 @@
                 dHour + ":" + dMin + ":" + dSec + "." + dMilliSec +
                 " GMT+0";
 
+            //signUp_no_utility
+            isAccountAvailable = !validateAndGetUserInput('signUp_no_utility', 'checkbox', true)[0];
+
             // signUp_total_thermostats_needed
             results = validateAndGetUserInput('signUp_total_thermostats_needed', 'select', false);
             sTotalThermostatsNeeded = results[0];
@@ -244,38 +247,44 @@
             if(isValid == false)
               validUserData = false;
 
-            // signUp_utility_login_userId
-            results = validateAndGetUserInput('signUp_utility_login_userId', 'textbox', false);
-            sUtilityLoginUserId = results[0];
-            isValid = results[1];
-            if(isValid == false)
-                validUserData = false;
+            if (isAccountAvailable) {
+                // signUp_utility_login_userId
+                results = validateAndGetUserInput('signUp_utility_login_userId', 'textbox', false);
+                sUtilityLoginUserId = results[0];
+                isValid = results[1];
+                if(isValid == false)
+                    validUserData = false;
 
-            // signUp_utility_password
-            results = validateAndGetUserInput('signUp_utility_password', 'textbox_password', false);
-            sUtilityPassword = results[0];
-            isValid = results[1];
-            if(isValid == false)
-                validUserData = false;
+                // signUp_utility_password
+                results = validateAndGetUserInput('signUp_utility_password', 'textbox_password', false);
+                sUtilityPassword = results[0];
+                isValid = results[1];
+                if(isValid == false)
+                    validUserData = false;
 
-            // signUp_utility_password_repeat
-            results = validateAndGetUserInput('signUp_utility_password_repeat', 'textbox_password', false);
-            sUtilityPasswordRepeat = results[0];
-            isValid = results[1];
-            if(isValid == false)
-                validUserData = false;
+                // signUp_utility_password_repeat
+                results = validateAndGetUserInput('signUp_utility_password_repeat', 'textbox_password', false);
+                sUtilityPasswordRepeat = results[0];
+                isValid = results[1];
+                if(isValid == false)
+                    validUserData = false;
 
-            // Make sure that passwords match
-            if(sUtilityPassword == sUtilityPasswordRepeat) {
-                passwordsMatch = true;
+                // Make sure that passwords match
+                if(sUtilityPassword == sUtilityPasswordRepeat) {
+                    passwordsMatch = true;
+                } else {
+                    if(DEBUG_MODE)
+                        console.log("[DEBUG] Passwords don't match.\nP1:  " + sUtilityPassword + "\nP2:  " + sUtilityPasswordRepeat);
+                    validUserData = false;
+                    passwordsMatch = false;
+                    div_setVisible('div_signUp_utility_password_fixme', true, 'inline');
+                    div_setVisible('div_signUp_utility_password_repeat_fixme', true, 'inline');
+                }
             } else {
-                if(DEBUG_MODE)
-                    console.log("[DEBUG] Passwords don't match.\nP1:  " + sUtilityPassword + "\nP2:  " + sUtilityPasswordRepeat);
-                validUserData = false;
-                passwordsMatch = false;
-                div_setVisible('div_signUp_utility_password_fixme', true, 'inline');
-                div_setVisible('div_signUp_utility_password_repeat_fixme', true, 'inline');
+                validUserData = true;
+                sUtilityProvider = sUtilityLoginUserId = sUtilityPassword = sUtilityPasswordRepeat = "Utility information not provided.";
             }
+
 
             // signUp_utility_firstName
             results = validateAndGetUserInput('signUp_utility_firstName', 'textbox', false);
@@ -389,7 +398,7 @@
                     msg = msgInvalid + "\n\nPasswords don't match."
                 else
                 msg = msgInvalid
-                alert(msg);
+                // alert(msg);
             }
         };
 
@@ -496,25 +505,34 @@
           }
         };
 
-        function toggle_link_utility_button(element) {
+        function toggle_link_utility_button() {
             var isAccountAvailable = !document.getElementById("signUp_no_utility").checked;
-            console.log(isAccountAvailable);
 
             var btnLinkUtilityAccount = document.getElementById('btnLinkUtilityAccount');
             var btnLinkUtilityContainer = document.getElementById('btnLinkUtilityContainer');
+            var lblLinkUtilityError = document.getElementById('div-link-utility-error');
 
             if (isAccountAvailable) {
                 btnLinkUtilityContainer.classList.remove('disabled');
                 btnLinkUtilityAccount.classList.remove('disabled');
                 btnLinkUtilityAccount.disabled = false;
-                console.log("ACC AVAIL");
+                // btnLinkUtilityAccount.removeAttribute('disabled');
+                document.getElementById('div-link-utility-error').style.visibility = "block";
+                show_link_account_error();
+
+                var done_button = document.getElementById('btn_utility_done');
+                var btnModalContainer = document.getElementById('btnModalLinkContainer');
+                done_button.classList.add('disabled');
+                btnModalContainer.classList.add('disabled');
+                done_button.disabled = true;
             } else {
                 btnLinkUtilityContainer.classList.add('disabled');
                 btnLinkUtilityAccount.classList.add('disabled');
                 btnLinkUtilityAccount.disabled = true;
-                console.log("ACC NOT AVAIL");
+                // btnLinkUtilityAccount.addAttribute('disabled');
+                document.getElementById('div-link-utility-error').style.visibility = "hidden";
+                clear_link_account_error();
             }
-            toggle_enroll_button(element);
         }
 
         function toggle_enroll_button(element) {
@@ -577,12 +595,8 @@
             } else {
                 validUserData = true;
                 sUtilityProvider = sUtilityLoginUserId = sUtilityPassword = sUtilityPasswordRepeat = "Utility information not provided.";
-
-                btnLinkUtilityContainer.classList.remove('disabled');
-                btnLinkUtilityAccount.classList.remove('disabled');
-                btnLinkUtilityAccount.disabled = false;
             }
-            console.log(sUtilityLoginUserId + " - " + sUtilityProvider + " - " + sUtilityPassword + " - " + sUtilityPasswordRepeat);
+
 
             // signUp_utility_firstName
             results = validateAndGetUserInput('signUp_utility_firstName', 'textbox', false);
@@ -594,6 +608,7 @@
                     error_msg = "Please enter a first name"
             }
 
+
             // signUp_utility_lastName
             results = validateAndGetUserInput('signUp_utility_lastName', 'textbox', false);
             sUtilityLastName = results[0];
@@ -603,6 +618,7 @@
                 if (element_id === "signUp_utility_lastName")
                     error_msg = "Please enter a last name"
             }
+
 
             // signUp_utility_location_address1
             results = validateAndGetUserInput('signUp_utility_location_address1', 'textbox', false);
@@ -614,12 +630,14 @@
                     error_msg = "Please enter an address"
             }
 
+
             // signUp_utility_location_address2
             results = validateAndGetUserInput('signUp_utility_location_address2', 'textbox', true);
             sUtilityLocationAddress2 = results[0];
             isValid = results[1];
             if(isValid === false)
                 validUserData = false;
+
 
             // signUp_utility_location_city
             results = validateAndGetUserInput('signUp_utility_location_city', 'textbox', false);
@@ -631,6 +649,7 @@
                     error_msg = "Please enter a valid city"
             }
 
+
             // signUp_utility_location_state
             results = validateAndGetUserInput('signUp_utility_location_state', 'textbox', false);
             sUtilityLocationState = results[0];
@@ -640,6 +659,7 @@
                 if (element_id === "signUp_utility_location_state")
                     error_msg = "Please select one"
             }
+
 
             // signUp_utility_location_zipcode
             results = validateAndGetUserInput('signUp_utility_location_zipcode', 'textbox', false);
@@ -652,6 +672,7 @@
                     error_msg = "Please enter a valid zip"
             }
 
+
             // signUp_utility_phone
             results = validateAndGetUserInput('signUp_utility_phone', 'textbox', false);
             sUtilityPhone = results[0];
@@ -663,6 +684,7 @@
                     error_msg = "Please enter a valid phone number"
             }
 
+
             // signUp_utility_email
             results = validateAndGetUserInput('signUp_utility_email', 'textbox_email', false);
             sUtilityEmail = results[0];
@@ -672,6 +694,7 @@
                 if (element_id === "signUp_utility_email")
                     error_msg = "Please enter a valid email"
             }
+
 
             // signUp_mostExcited
             results = validateAndGetUserInput('signUp_mostExcited', 'select', false);
@@ -683,12 +706,15 @@
                     error_msg = "Please select one"
             }
 
+
+
             // signUp_legal_accepted
             // We don't need to save any data, but just make sure that they check the checkbox
             results = validateAndGetUserInput('signUp_legal_accepted', 'checkbox', false);
             isValid = results[1];
             if(isValid === false)
                 validUserData = false;
+
 
             var enroll_button = document.getElementById('btn_signup_enroll');
             var btnEnrollContainer = document.getElementById('btnEnrollContainer');
@@ -698,9 +724,11 @@
               btnEnrollContainer.classList.remove('disabled');
 
               enroll_button.disabled = false;
-              showErrorMessage(element_id, "");
+              if (element_id != 'signUp_no_utility')
+                showErrorMessage(element_id, "");
             } else {
-                showErrorMessage(element_id, error_msg);
+                if (element_id !== 'signUp_no_utility') 
+                    showErrorMessage(element_id, error_msg);
               enroll_button.classList.add('disabled');
               btnEnrollContainer.classList.add('disabled');
               enroll_button.disabled = true;
@@ -725,6 +753,15 @@
         function clear_link_account_error() {
             var lblLinkUtilityError = document.getElementById('div-link-utility-error');
             lblLinkUtilityError.style.visibility = "hidden";
+        }
+
+        function show_link_account_error() {
+            var lblLinkUtilityError = document.getElementById('div-link-utility-error');
+            lblLinkUtilityError.style.visibility = "visible";
+            document.getElementById("signUp_utility_login_userId").value = "";
+            document.getElementById("signUp_utility_password").value = "";
+            document.getElementById("signUp_utility_password_repeat").value = "";
+            document.getElementById("utility_other").value = "";
         }
     </script>
     <style>
@@ -1317,7 +1354,7 @@ select {
                             <div class="row">
                                 <div id="checkNoUtility" class="effield">
                                     <div class="col-2">
-                                        <input type="checkbox" id="signUp_no_utility"  value="on" onchange="toggle_link_utility_button(this);" onblur="toggle_link_utility_button(this);">
+                                        <input type="checkbox" id="signUp_no_utility"  value="on" onchange="toggle_link_utility_button(); toggle_enroll_button(this);" onblur="toggle_link_utility_button(); toggle_enroll_button(this);">
                                     </div>
                                     <div class="col-10">
                                         <label class="effieldlabel efCheckboxStyleLabel" for="signUp_no_utility">
